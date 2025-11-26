@@ -618,6 +618,7 @@ export class Battle {
             this.terminal.bossWarning();
             this.terminal.print(`You are facing [red][bold]${this.enemy.name}[/bold][/red], a powerful enemy!`);
             this.terminal.print("Be prepared for special attacks!");
+            await this.terminal.waitForEnter();
         }
 
         // Show temp boosts

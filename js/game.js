@@ -174,20 +174,21 @@ export class Game {
         this.terminal.print("\nYou've reached [cyan]The Thief's Crossroads[/cyan]. Where do you want to go?");
         this.terminal.print("Type 'left' or 'right'");
 
-        const direction = await this.terminal.prompt();
+        while (true) {
+            const direction = await this.terminal.prompt();
 
-        // Secret shortcut
-        if (direction.toLowerCase() === 'p') {
-            return await this.grandFinale();
-        }
+            // Secret shortcut
+            if (direction.toLowerCase() === 'p') {
+                return await this.grandFinale();
+            }
 
-        if (direction.toLowerCase() === 'left' || direction.toLowerCase() === 'l') {
-            return await this.lakePath();
-        } else if (direction.toLowerCase() === 'right' || direction.toLowerCase() === 'r') {
-            return await this.mountainPath();
-        } else {
-            this.terminal.print("\n[red]Your hesitation allows hidden traps to activate![/red]");
-            return await this.gameOver("Your hesitation allows hidden traps to activate!");
+            if (direction.toLowerCase() === 'left' || direction.toLowerCase() === 'l') {
+                return await this.lakePath();
+            } else if (direction.toLowerCase() === 'right' || direction.toLowerCase() === 'r') {
+                return await this.mountainPath();
+            } else {
+                this.terminal.print("Invalid entry. Please type 'left' or 'right'.");
+            }
         }
     }
 
@@ -199,22 +200,26 @@ export class Game {
         this.terminal.print("\nYou arrive at a vast lake. There's a boat tied to a dock.");
         this.terminal.print("Type 'swim' (s) to swim across or 'take' (t) to take the boat.");
 
-        const choice = await this.terminal.prompt();
+        while (true) {
+            const choice = await this.terminal.prompt();
 
-        if (choice.toLowerCase() === 'swim' || choice.toLowerCase() === 's') {
-            this.terminal.print("\nAs you swim across the lake, a ferocious shark appears!");
-            if (!await this.runBattle('shark', 'thiefs_crossroads')) {
-                return await this.gameOver("You were defeated by the Ferocious Shark!");
+            if (choice.toLowerCase() === 'swim' || choice.toLowerCase() === 's') {
+                this.terminal.print("\nAs you swim across the lake, a ferocious shark appears!");
+                if (!await this.runBattle('shark', 'thiefs_crossroads')) {
+                    return await this.gameOver("You were defeated by the Ferocious Shark!");
+                }
+                this.terminal.print("\nAfter defeating the shark, you reach the other side of the lake.");
+                break;
+            } else if (choice.toLowerCase() === 'take' || choice.toLowerCase() === 't') {
+                this.terminal.print("\nAs you row across the lake, a terrifying lake monster emerges from the depths!");
+                if (!await this.runBattle('lake_monster', 'thiefs_crossroads')) {
+                    return await this.gameOver("You were dragged underwater by the Lake Monster!");
+                }
+                this.terminal.print("\nAfter defeating the lake monster, the boat takes you safely across.");
+                break;
+            } else {
+                this.terminal.print("Invalid entry. Please type 'swim' or 'take'.");
             }
-            this.terminal.print("\nAfter defeating the shark, you reach the other side of the lake.");
-        } else if (choice.toLowerCase() === 'take' || choice.toLowerCase() === 't') {
-            this.terminal.print("\nAs you row across the lake, a terrifying lake monster emerges from the depths!");
-            if (!await this.runBattle('lake_monster', 'thiefs_crossroads')) {
-                return await this.gameOver("You were dragged underwater by the Lake Monster!");
-            }
-            this.terminal.print("\nAfter defeating the lake monster, the boat takes you safely across.");
-        } else {
-            return await this.thiefsCrossroads();
         }
 
         this.terminal.print("In the distance, you can see a large castle.");
@@ -252,21 +257,24 @@ export class Game {
         this.terminal.print("A [red]red door[/red] and a [blue]blue door[/blue].");
         this.terminal.print("Which door do you choose? (red/blue)");
 
-        const choice = await this.terminal.prompt();
+        while (true) {
+            const choice = await this.terminal.prompt();
 
-        if (choice.toLowerCase() === 'red' || choice.toLowerCase() === 'r') {
-            this.terminal.print("\nBehind the red door, you find a savage bear rider guarding the passage!");
-            if (!await this.runBattle('bear_rider', 'hidden_passages')) {
-                return await this.gameOver("You were defeated by the bear rider!");
+            if (choice.toLowerCase() === 'red' || choice.toLowerCase() === 'r') {
+                this.terminal.print("\nBehind the red door, you find a savage bear rider guarding the passage!");
+                if (!await this.runBattle('bear_rider', 'hidden_passages')) {
+                    return await this.gameOver("You were defeated by the bear rider!");
+                }
+                break;
+            } else if (choice.toLowerCase() === 'blue' || choice.toLowerCase() === 'b') {
+                this.terminal.print("\nAs you open the blue door, a fearsome dragon knight challenges you!");
+                if (!await this.runBattle('dragon_knight', 'hidden_passages')) {
+                    return await this.gameOver("You were defeated by the dragon knight!");
+                }
+                break;
+            } else {
+                this.terminal.print("Invalid entry. Please type 'red' or 'blue'.");
             }
-        } else if (choice.toLowerCase() === 'blue' || choice.toLowerCase() === 'b') {
-            this.terminal.print("\nAs you open the blue door, a fearsome dragon knight challenges you!");
-            if (!await this.runBattle('dragon_knight', 'hidden_passages')) {
-                return await this.gameOver("You were defeated by the dragon knight!");
-            }
-        } else {
-            this.terminal.print("\n[red]Your indecision costs you dearly. The guardians attack together![/red]");
-            return await this.gameOver("Your indecision costs you dearly!");
         }
 
         // Shop after defeating castle guardian
@@ -327,7 +335,7 @@ export class Game {
                 }
                 break;
             } else {
-                this.terminal.print("Please choose path 1 or 2.");
+                this.terminal.print("Invalid entry. Please choose path 1 or 2.");
             }
         }
 
@@ -357,7 +365,7 @@ export class Game {
             } else if (choice === '3') {
                 result = await this.sunkenRuins();
             } else {
-                this.terminal.print("Please choose a doorway (1-3).");
+                this.terminal.print("Invalid entry. Please choose a doorway (1-3).");
                 continue;
             }
 
@@ -469,7 +477,7 @@ export class Game {
             } else if (choice === '3') {
                 return await this.forgottenColiseum();
             } else {
-                this.terminal.print("Please choose a portal (1-3).");
+                this.terminal.print("Invalid entry. Please choose a portal (1-3).");
             }
         }
     }

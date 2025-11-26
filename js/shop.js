@@ -324,20 +324,8 @@ export class Shop {
         }
 
         this.character.gold -= price;
-
-        const currentDamage = this.character.getWeaponDamage();
-        this.terminal.print(`\nYour current weapon: ${this.character.weapon} (${currentDamage} damage)`);
-        this.terminal.print(`New weapon: ${name} (${damage} damage)`);
-        this.terminal.print("Would you like to equip it now? (y/n)");
-
-        const equip = await this.terminal.prompt();
-        if (equip.toLowerCase() === 'y') {
-            this.character.weapon = name;
-            this.terminal.print(`You equip the ${name}!`);
-        } else {
-            this.terminal.print(`You keep the ${name} in your inventory for later.`);
-        }
-
+        this.character.weapon = name;
+        this.terminal.print(`\nYou purchased and equipped the ${name}!`);
         this.terminal.print(`You have ${this.terminal.goldText(this.character.gold)} remaining.`);
     }
 
@@ -360,20 +348,8 @@ export class Shop {
         }
 
         this.character.gold -= price;
-
-        const currentDefense = this.character.getShieldDefense();
-        this.terminal.print(`\nYour current shield: ${this.character.shield} (${currentDefense} defense)`);
-        this.terminal.print(`New shield: ${name} (${defense} defense)`);
-        this.terminal.print("Would you like to equip it now? (y/n)");
-
-        const equip = await this.terminal.prompt();
-        if (equip.toLowerCase() === 'y') {
-            this.character.shield = name;
-            this.terminal.print(`You equip the ${name}!`);
-        } else {
-            this.terminal.print(`You keep the ${name} in your inventory for later.`);
-        }
-
+        this.character.shield = name;
+        this.terminal.print(`\nYou purchased and equipped the ${name}!`);
         this.terminal.print(`You have ${this.terminal.goldText(this.character.gold)} remaining.`);
     }
 
