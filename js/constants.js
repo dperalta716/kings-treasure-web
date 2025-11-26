@@ -344,33 +344,33 @@ export const LEVEL_UP_BONUSES = {
 export function getSpritePath(type, name) {
     // Convert name to filename format (lowercase, underscores)
     const filename = name.toLowerCase().replace(/'/g, '').replace(/\s+/g, '_');
-    return `assets/sprites/${type}/${filename}.png`;
+    return `assets/sprites/${type}/${filename}.webp`;
 }
 
 export function getEnemySprite(enemyType) {
-    return `assets/sprites/enemies/${enemyType}.png`;
+    return `assets/sprites/enemies/${enemyType}.webp`;
 }
 
 export function getDefeatedEnemySprite(enemyType) {
-    return `assets/sprites/enemies/${enemyType}_defeated.png`;
+    return `assets/sprites/enemies/${enemyType}_defeated.webp`;
 }
 
 export function getWeaponSprite(weaponName) {
     const filename = weaponName.toLowerCase().replace(/'/g, '').replace(/\s+/g, '_');
-    return `assets/sprites/weapons/${filename}.png`;
+    return `assets/sprites/weapons/${filename}.webp`;
 }
 
 export function getShieldSprite(shieldName) {
     const filename = shieldName.toLowerCase().replace(/'/g, '').replace(/\s+/g, '_');
-    return `assets/sprites/shields/${filename}.png`;
+    return `assets/sprites/shields/${filename}.webp`;
 }
 
 export function getItemSprite(itemName) {
     const filename = itemName.toLowerCase().replace(/'/g, '').replace(/\s+/g, '_');
-    return `assets/sprites/items/${filename}.png`;
+    return `assets/sprites/items/${filename}.webp`;
 }
 
 export function getLocationSprite(locationName) {
     const filename = locationName.toLowerCase().replace(/'/g, '').replace(/\s+/g, '_');
-    return `assets/sprites/locations/${filename}.png`;
+    return `assets/sprites/locations/${filename}.webp`;
 }
