@@ -95,6 +95,15 @@ export class Shop {
         this.terminal.print("\n=== WEAPONS ===");
 
         const weapons = Object.entries(weaponList);
+
+        // Show grid of all weapons
+        const gridItems = weapons.map(([name, data], i) => ({
+            src: getWeaponSprite(name),
+            label: name,
+            number: i + 1
+        }));
+        this.terminal.showSpriteGrid(gridItems);
+
         weapons.forEach(([name, data], i) => {
             this.terminal.print(`\n${i + 1}. ${name} - ${data.price} gold (${data.damage} damage)`);
         });
@@ -105,11 +114,14 @@ export class Shop {
             const idx = parseInt(choice) - 1;
 
             if (idx === weapons.length) {
+                this.terminal.hideSpriteGrid();
+                this.terminal.showSprite(getLocationSprite('shop'), 'Shop');
                 return;
             }
 
             if (idx >= 0 && idx < weapons.length) {
                 const [name, data] = weapons[idx];
+                this.terminal.hideSpriteGrid();
                 this.terminal.showSprite(getWeaponSprite(name), name);
                 await this.purchaseWeapon(name, data.price, data.damage);
                 break;
@@ -126,6 +138,15 @@ export class Shop {
         this.terminal.print("\n=== SHIELDS ===");
 
         const shields = Object.entries(shieldList);
+
+        // Show grid of all shields
+        const gridItems = shields.map(([name, data], i) => ({
+            src: getShieldSprite(name),
+            label: name,
+            number: i + 1
+        }));
+        this.terminal.showSpriteGrid(gridItems);
+
         shields.forEach(([name, data], i) => {
             this.terminal.print(`\n${i + 1}. ${name} - ${data.price} gold (${data.defense} defense)`);
         });
@@ -136,11 +157,14 @@ export class Shop {
             const idx = parseInt(choice) - 1;
 
             if (idx === shields.length) {
+                this.terminal.hideSpriteGrid();
+                this.terminal.showSprite(getLocationSprite('shop'), 'Shop');
                 return;
             }
 
             if (idx >= 0 && idx < shields.length) {
                 const [name, data] = shields[idx];
+                this.terminal.hideSpriteGrid();
                 this.terminal.showSprite(getShieldSprite(name), name);
                 await this.purchaseShield(name, data.price, data.defense);
                 break;
@@ -157,6 +181,15 @@ export class Shop {
         this.terminal.print("\n=== POTIONS ===");
 
         const potions = Object.entries(potionList);
+
+        // Show grid of all potions
+        const gridItems = potions.map(([name, data], i) => ({
+            src: getItemSprite(name),
+            label: name,
+            number: i + 1
+        }));
+        this.terminal.showSpriteGrid(gridItems);
+
         potions.forEach(([name, data], i) => {
             this.terminal.print(`\n${i + 1}. ${name} - ${data.price} gold (${data.effect})`);
         });
@@ -167,13 +200,15 @@ export class Shop {
             const idx = parseInt(choice) - 1;
 
             if (idx === potions.length) {
+                this.terminal.hideSpriteGrid();
+                this.terminal.showSprite(getLocationSprite('shop'), 'Shop');
                 return;
             }
 
             if (idx >= 0 && idx < potions.length) {
                 const [name, data] = potions[idx];
-                const spriteName = name.toLowerCase().replace(/['\s]/g, '_');
-                this.terminal.showSprite(getItemSprite(spriteName), name);
+                this.terminal.hideSpriteGrid();
+                this.terminal.showSprite(getItemSprite(name), name);
                 await this.purchasePotion(name, data.price);
                 break;
             }
@@ -189,6 +224,15 @@ export class Shop {
         this.terminal.print("\n=== LEGENDARY POTIONS ===");
 
         const potions = Object.entries(ADVANCED_SHOP_POTIONS);
+
+        // Show grid of all potions
+        const gridItems = potions.map(([name, data], i) => ({
+            src: getItemSprite(name),
+            label: name,
+            number: i + 1
+        }));
+        this.terminal.showSpriteGrid(gridItems);
+
         potions.forEach(([name, data], i) => {
             this.terminal.print(`\n${i + 1}. ${name} - ${data.price} gold (${data.effect})`);
         });
@@ -199,13 +243,15 @@ export class Shop {
             const idx = parseInt(choice) - 1;
 
             if (idx === potions.length) {
+                this.terminal.hideSpriteGrid();
+                this.terminal.showSprite(getLocationSprite('shop'), 'Shop');
                 return;
             }
 
             if (idx >= 0 && idx < potions.length) {
                 const [name, data] = potions[idx];
-                const spriteName = name.toLowerCase().replace(/['\s]/g, '_');
-                this.terminal.showSprite(getItemSprite(spriteName), name);
+                this.terminal.hideSpriteGrid();
+                this.terminal.showSprite(getItemSprite(name), name);
                 await this.purchaseAdvancedPotion(name, data.price);
                 break;
             }
@@ -222,6 +268,15 @@ export class Shop {
         this.terminal.print("The merchant reveals a collection of ancient tomes.");
 
         const spells = Object.entries(SHOP_SPELLS);
+
+        // Show grid of all spells
+        const gridItems = spells.map(([name, data], i) => ({
+            src: getItemSprite(name),
+            label: name,
+            number: i + 1
+        }));
+        this.terminal.showSpriteGrid(gridItems);
+
         spells.forEach(([name, data], i) => {
             this.terminal.print(`\n${i + 1}. ${name} Grimoire - ${data.price} gold`);
             this.terminal.print(`   ${data.description}`);
@@ -233,11 +288,15 @@ export class Shop {
             const idx = parseInt(choice) - 1;
 
             if (idx === spells.length) {
+                this.terminal.hideSpriteGrid();
+                this.terminal.showSprite(getLocationSprite('shop'), 'Shop');
                 return;
             }
 
             if (idx >= 0 && idx < spells.length) {
                 const [name, data] = spells[idx];
+                this.terminal.hideSpriteGrid();
+                this.terminal.showSprite(getItemSprite(name), name);
                 await this.purchaseSpell(name, data.price);
                 break;
             }

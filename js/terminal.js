@@ -1,14 +1,21 @@
 /**
  * Terminal - Handles text output and input for the game
  */
+import { Sidebar } from './sidebar.js';
+
 export class Terminal {
     constructor(outputEl, inputEl, spriteEl, spriteLabelEl) {
         this.output = outputEl;
         this.input = inputEl;
         this.sprite = spriteEl;
         this.spriteLabel = spriteLabelEl;
+        this.spritePanel = spriteEl.parentElement;
+        this.spriteGrid = document.getElementById('sprite-grid');
         this.inputResolve = null;
         this.inputActive = false;
+
+        // Initialize sidebar
+        this.sidebar = new Sidebar();
 
         // Set up input handler
         this.input.addEventListener('keydown', (e) => this.handleKeydown(e));
@@ -152,14 +159,26 @@ export class Terminal {
     }
 
     /**
-     * Display a sprite image
+     * Display a sprite image with fade transition
      */
     showSprite(src, label = '') {
         if (src) {
-            this.sprite.src = src;
-            this.sprite.style.display = 'block';
-            this.sprite.alt = label;
-            this.spriteLabel.textContent = label;
+            // If sprite is already visible, fade out first
+            if (this.sprite.style.display === 'block' && this.sprite.src !== src) {
+                this.sprite.classList.add('fading');
+                setTimeout(() => {
+                    this.sprite.src = src;
+                    this.sprite.alt = label;
+                    this.spriteLabel.textContent = label;
+                    this.sprite.classList.remove('fading');
+                }, 250); // Match CSS transition duration
+            } else {
+                // First time showing - just display it
+                this.sprite.src = src;
+                this.sprite.style.display = 'block';
+                this.sprite.alt = label;
+                this.spriteLabel.textContent = label;
+            }
         } else {
             this.hideSprite();
         }
@@ -172,6 +191,49 @@ export class Terminal {
         this.sprite.style.display = 'none';
         this.sprite.src = '';
         this.spriteLabel.textContent = '';
+    }
+
+    /**
+     * Show a grid of sprites (for shop browsing)
+     * @param {Array} items - Array of {src, label, number} objects
+     */
+    showSpriteGrid(items) {
+        // Clear existing grid
+        this.spriteGrid.innerHTML = '';
+
+        // Add grid mode class
+        this.spritePanel.classList.add('grid-mode');
+
+        // Create grid items
+        items.forEach((item) => {
+            const div = document.createElement('div');
+            div.className = 'grid-item';
+
+            const number = document.createElement('div');
+            number.className = 'grid-number';
+            number.textContent = item.number;
+
+            const img = document.createElement('img');
+            img.src = item.src;
+            img.alt = item.label;
+
+            const label = document.createElement('div');
+            label.className = 'grid-label';
+            label.textContent = item.label;
+
+            div.appendChild(number);
+            div.appendChild(img);
+            div.appendChild(label);
+            this.spriteGrid.appendChild(div);
+        });
+    }
+
+    /**
+     * Hide the sprite grid and return to single sprite mode
+     */
+    hideSpriteGrid() {
+        this.spritePanel.classList.remove('grid-mode');
+        this.spriteGrid.innerHTML = '';
     }
 
     /**

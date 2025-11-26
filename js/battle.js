@@ -108,30 +108,33 @@ export function calculateDamage(attacker, defender, isPlayer = true) {
  * Battle class - manages a single battle
  */
 export class Battle {
-    constructor(terminal, character, enemyType) {
+    constructor(terminal, character, enemyType, saveMenu = null, location = null) {
         this.terminal = terminal;
         this.character = character;
         this.enemyType = enemyType;
         this.enemy = createEnemy(enemyType);
         this.isBossBattle = this.enemy.isBoss;
+        this.saveMenu = saveMenu;
+        this.location = location;
     }
 
     /**
-     * Display battle stats
+     * Update sidebar with current battle state
+     */
+    updateSidebar() {
+        const sidebar = this.terminal.sidebar;
+        sidebar.updateHero(this.character);
+        sidebar.updateEnemy(this.enemy);
+        sidebar.updateSpells(this.character, this.character.usedSpells);
+        sidebar.showBuffs(this.character);
+    }
+
+    /**
+     * Display battle stats (simplified - sidebar shows details)
      */
     displayStats() {
-        this.terminal.separator();
-        const bossMarker = this.enemy.isBoss ? ' [bold][red][BOSS][/red][/bold]' : '';
-        this.terminal.print(`${this.enemy.name}${bossMarker}: HP ${this.terminal.healthText(this.enemy.hp, this.enemy.maxHp)}`);
-        this.terminal.print(`You: HP ${this.terminal.healthText(this.character.hp, this.character.maxHp)} | Level [cyan]${this.character.level}[/cyan]`);
-        this.terminal.print(`Weapon: [yellow]${this.character.weapon}[/yellow] | Shield: [cyan]${this.character.shield}[/cyan]`);
-
-        // Show special items if any
-        const items = this.character.getSpecialItems();
-        if (items.length > 0) {
-            this.terminal.print(`Items: [green]${items.join(', ')}[/green]`);
-        }
-        this.terminal.separator();
+        // Update sidebar
+        this.updateSidebar();
     }
 
     /**
@@ -170,7 +173,7 @@ export class Battle {
         if (choice === ';' || choice === "'") {
             this.enemy.hp = 0;
             this.terminal.print("\n[yellow]*** SECRET COMMAND ACTIVATED ***[/yellow]");
-            this.terminal.print(`You unleash your secret power and instantly defeat the ${this.enemy.name}!`);
+            this.terminal.print(`You unleash your secret power and instantly defeat the [bold]${this.enemy.name}[/bold]!`);
             return 'win';
         }
 
@@ -311,7 +314,7 @@ export class Battle {
             const damage = this.character.attack + spell.damageBonus;
             this.enemy.takeDamage(damage);
             this.terminal.print(`\nYou cast [magenta]${spellName}[/magenta]!`);
-            this.terminal.print(`Magical energy hits the ${this.enemy.name} for [red]${damage}[/red] damage!`);
+            this.terminal.print(`Magical energy hits the [bold]${this.enemy.name}[/bold] for [red]${damage}[/red] damage!`);
             this.character.lastAction = 'spell';
             this.character.lastSpell = spellName;
             this.character.lastDamage = damage;
@@ -335,7 +338,7 @@ export class Battle {
             const healAmount = Math.min(damage, this.character.maxHp - this.character.hp);
             this.character.hp += healAmount;
             this.terminal.print(`\nYou cast [magenta]${spellName}[/magenta]!`);
-            this.terminal.print(`Dark tendrils drain ${this.enemy.name} for [red]${damage}[/red] damage!`);
+            this.terminal.print(`Dark tendrils drain [bold]${this.enemy.name}[/bold] for [red]${damage}[/red] damage!`);
             this.terminal.print(`You heal for [green]${healAmount}[/green] HP!`);
             this.character.lastAction = 'spell';
             this.character.lastSpell = spellName;
@@ -349,7 +352,7 @@ export class Battle {
      * Enemy's turn
      */
     async enemyTurn() {
-        this.terminal.print(`\n[red]${this.enemy.name}'s turn![/red]`);
+        this.terminal.print(`\n[red][bold]${this.enemy.name}[/bold]'s turn![/red]`);
 
         // Miss chance
         let missChance = 0.2;
@@ -358,7 +361,7 @@ export class Battle {
         }
 
         if (Math.random() < missChance) {
-            this.terminal.print(`The ${this.enemy.name} fumbles their attack and misses!`);
+            this.terminal.print(`The [bold]${this.enemy.name}[/bold] fumbles their attack and misses!`);
             return 'continue';
         }
 
@@ -382,7 +385,7 @@ export class Battle {
             if (Math.random() < critChance) {
                 isCritical = true;
                 damage = Math.floor(damage * critMultiplier);
-                this.terminal.print(`[critical]CRITICAL HIT![/critical] ${this.enemy.name}'s attack is devastating!`);
+                this.terminal.print(`[critical]CRITICAL HIT![/critical] [bold]${this.enemy.name}[/bold]'s attack is devastating!`);
             }
         }
 
@@ -400,15 +403,15 @@ export class Battle {
         if (this.character.hasGearShield && Math.random() < 0.20) {
             const reflectDamage = Math.floor(damage / 2);
             this.terminal.print("\n[cyan]*** GEAR SHIELD ACTIVATES! ***[/cyan]");
-            this.terminal.print(`Your Gear Shield reflects ${reflectDamage} damage back at ${this.enemy.name}!`);
+            this.terminal.print(`Your Gear Shield reflects ${reflectDamage} damage back at [bold]${this.enemy.name}[/bold]!`);
             if (this.enemy.takeDamage(reflectDamage)) {
-                this.terminal.print(`Your Gear Shield reflection defeated ${this.enemy.name}!`);
+                this.terminal.print(`Your Gear Shield reflection defeated [bold]${this.enemy.name}[/bold]!`);
                 return 'win';
             }
         }
 
         // Apply damage
-        this.terminal.print(`The ${this.enemy.name} attacks you for [red]${damage}[/red] damage!`);
+        this.terminal.print(`The [bold]${this.enemy.name}[/bold] attacks you for [red]${damage}[/red] damage!`);
         const isDead = this.character.takeDamage(damage);
 
         // Gladiator Shield counter
@@ -417,7 +420,7 @@ export class Battle {
             this.terminal.print("\n[yellow]*** GLADIATOR'S SHIELD COUNTER-ATTACK! ***[/yellow]");
             this.terminal.print(`Your shield strikes back for ${counterDamage} damage!`);
             if (this.enemy.takeDamage(counterDamage)) {
-                this.terminal.print(`Your counter-attack defeated ${this.enemy.name}!`);
+                this.terminal.print(`Your counter-attack defeated [bold]${this.enemy.name}[/bold]!`);
                 return 'win';
             }
         }
@@ -445,7 +448,7 @@ export class Battle {
         // Show defeated sprite
         this.terminal.showSprite(getDefeatedEnemySprite(this.enemyType), `${this.enemy.name} Defeated`);
         this.terminal.victoryBanner();
-        this.terminal.print(`You defeated the [red]${this.enemy.name}[/red]!`);
+        this.terminal.print(`You defeated the [red][bold]${this.enemy.name}[/bold][/red]!`);
         await this.terminal.waitForEnter();
 
         // XP and gold rewards
@@ -461,10 +464,18 @@ export class Battle {
             this.terminal.print(`Defense increased by [cyan]+${levelUp.defenseGain}[/cyan]`);
 
             if (levelUp.newSpell) {
+                this.terminal.showSprite(getItemSprite(levelUp.newSpell.name), levelUp.newSpell.name);
                 this.terminal.print(`\nYou learned a new spell: [magenta]${levelUp.newSpell.name}[/magenta]!`);
                 this.terminal.print(levelUp.newSpell.description);
             }
+            // Update sidebar to show new stats and spells
+            this.terminal.sidebar.updateHero(this.character);
             await this.terminal.waitForEnter();
+        }
+
+        // Offer save after level-up
+        if (levelUps.length > 0 && this.saveMenu && this.location) {
+            await this.saveMenu.offerSave(this.character, this.location);
         }
 
         this.character.gold += this.enemy.goldReward;
@@ -508,7 +519,7 @@ export class Battle {
         // Legacy Blade kill tracking
         if (this.character.hasLegacyBlade) {
             this.character.legacyBladeKills++;
-            this.terminal.print(`\nYour Legacy Blade absorbs the essence of ${this.enemy.name}!`);
+            this.terminal.print(`\nYour Legacy Blade absorbs the essence of [bold]${this.enemy.name}[/bold]!`);
             this.terminal.print(`Legacy Blade power: [green]+${this.character.legacyBladeKills}[/green] damage`);
         }
     }
@@ -517,7 +528,7 @@ export class Battle {
      * Handle special item drops
      */
     async handleSpecialItemDrop(drop) {
-        this.terminal.print(`\nThe ${this.enemy.name} dropped something special!`);
+        this.terminal.print(`\nThe [bold]${this.enemy.name}[/bold] dropped something special!`);
 
         // Show appropriate sprite
         if (drop.becomesShield) {
@@ -562,7 +573,7 @@ export class Battle {
         const currentDamage = this.character.getWeaponDamage();
         const newDamage = WEAPON_DAMAGE[weaponName] || 3;
 
-        this.terminal.print(`\nThe ${this.enemy.name} dropped a ${weaponName}!`);
+        this.terminal.print(`\nThe [bold]${this.enemy.name}[/bold] dropped a ${weaponName}!`);
         this.terminal.showSprite(getWeaponSprite(weaponName), weaponName);
 
         this.terminal.print(`Your current weapon: ${this.character.weapon} (${currentDamage} damage)`);
@@ -596,13 +607,16 @@ export class Battle {
         // Reset battle state
         this.character.usedSpells = [];
 
-        // Show enemy sprite
+        // Show enemy sprite and in sidebar
         this.terminal.showSprite(getEnemySprite(this.enemyType), this.enemy.name);
+        this.terminal.sidebar.showEnemy(this.enemy);
+        this.terminal.sidebar.resetSpellStatus();
+        this.updateSidebar();
 
         // Boss warning
         if (this.isBossBattle) {
             this.terminal.bossWarning();
-            this.terminal.print(`You are facing [red]${this.enemy.name}[/red], a powerful enemy!`);
+            this.terminal.print(`You are facing [red][bold]${this.enemy.name}[/bold][/red], a powerful enemy!`);
             this.terminal.print("Be prepared for special attacks!");
         }
 
@@ -618,32 +632,37 @@ export class Battle {
         while (true) {
             this.displayStats();
 
-            // Potion reminder
-            if (this.character.potions > 0 && this.character.hp < this.character.maxHp * 0.5) {
-                this.terminal.print(`[dim]Remember: You have ${this.character.potions} Health Potions.[/dim]`);
-            }
-
             // Player turn
             const playerResult = await this.playerTurn();
+            this.updateSidebar();
             await this.terminal.delay(800);
 
             if (this.enemy.hp <= 0 || playerResult === 'win') {
+                this.terminal.sidebar.hideEnemy();
+                this.terminal.sidebar.hideBuffs();
                 await this.handleVictory();
+                this.terminal.sidebar.updateHero(this.character);
                 return true;
             }
 
             // Enemy turn
             const enemyResult = await this.enemyTurn();
+            this.updateSidebar();
             await this.terminal.delay(800);
 
             if (enemyResult === 'win') {
+                this.terminal.sidebar.hideEnemy();
+                this.terminal.sidebar.hideBuffs();
                 await this.handleVictory();
+                this.terminal.sidebar.updateHero(this.character);
                 return true;
             }
 
             if (enemyResult === 'lose') {
+                this.terminal.sidebar.hideEnemy();
+                this.terminal.sidebar.hideBuffs();
                 this.terminal.defeatBanner();
-                this.terminal.print(`You were defeated by the [red]${this.enemy.name}[/red]!`);
+                this.terminal.print(`You were defeated by the [red][bold]${this.enemy.name}[/bold][/red]!`);
                 this.character.resetTempEffects();
                 return false;
             }

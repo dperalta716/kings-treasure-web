@@ -8,9 +8,101 @@
 </head>
 <body>
     <div id="game-container">
-        <div id="sprite-panel">
-            <img id="current-sprite" src="" alt="" style="display: none;">
-            <div id="sprite-label"></div>
+        <div id="top-section">
+            <div id="sprite-panel">
+                <img id="current-sprite" src="" alt="" style="display: none;">
+                <div id="sprite-grid"></div>
+                <div id="sprite-label"></div>
+            </div>
+            <div id="stats-sidebar">
+                <!-- Enemy Section (combat only) -->
+                <div id="enemy-stats" class="stats-section hidden">
+                    <div class="section-title">ENEMY</div>
+                    <div id="enemy-name" class="enemy-name"></div>
+                    <div class="hp-row">
+                        <span class="label">HP</span>
+                        <div class="hp-bar-container">
+                            <div id="enemy-hp-bar" class="hp-bar"></div>
+                        </div>
+                        <span id="enemy-hp-text" class="hp-text"></span>
+                    </div>
+                    <div class="stat-row">
+                        <span>ATK: <span id="enemy-atk">0</span></span>
+                        <span>DEF: <span id="enemy-def">0</span></span>
+                    </div>
+                </div>
+
+                <!-- Hero Section -->
+                <div id="hero-stats" class="stats-section">
+                    <div class="section-title">HERO</div>
+                    <div class="stat-row">
+                        <span>Level <span id="hero-level">1</span></span>
+                        <span id="hero-gold" class="gold-text">0 gold</span>
+                    </div>
+                    <div class="hp-row">
+                        <span class="label">HP</span>
+                        <div class="hp-bar-container">
+                            <div id="hero-hp-bar" class="hp-bar"></div>
+                        </div>
+                        <span id="hero-hp-text" class="hp-text"></span>
+                    </div>
+                    <div class="xp-row">
+                        <span class="label">XP</span>
+                        <div class="xp-bar-container">
+                            <div id="hero-xp-bar" class="xp-bar"></div>
+                        </div>
+                        <span id="hero-xp-text" class="xp-text"></span>
+                    </div>
+                </div>
+
+                <!-- Equipment Section -->
+                <div id="equipment-stats" class="stats-section">
+                    <div class="section-title">EQUIPMENT</div>
+                    <div class="equip-row">
+                        <span class="equip-icon">⚔️</span>
+                        <span id="weapon-name">Rusty Sword</span>
+                        <span id="weapon-dmg" class="stat-value">(3)</span>
+                    </div>
+                    <div class="equip-row">
+                        <span class="equip-icon">🛡️</span>
+                        <span id="shield-name">Wooden Buckler</span>
+                        <span id="shield-def" class="stat-value">(1)</span>
+                    </div>
+                </div>
+
+                <!-- Inventory Section -->
+                <div id="inventory-stats" class="stats-section">
+                    <div class="section-title">INVENTORY</div>
+                    <div id="potions-row" class="inv-row">
+                        <span class="inv-icon">&#9829;</span>
+                        <span>Health Potions</span>
+                        <span id="potion-count" class="inv-count">0</span>
+                    </div>
+                    <div id="superior-potions-row" class="inv-row hidden">
+                        <span class="inv-icon">&#9733;</span>
+                        <span>Superior Potions</span>
+                        <span id="superior-potion-count" class="inv-count">0</span>
+                    </div>
+                </div>
+
+                <!-- Spells Section -->
+                <div id="spells-stats" class="stats-section hidden">
+                    <div class="section-title">SPELLS</div>
+                    <div id="spells-list"></div>
+                </div>
+
+                <!-- Special Items Section -->
+                <div id="special-items-stats" class="stats-section hidden">
+                    <div class="section-title">SPECIAL ITEMS</div>
+                    <div id="special-items-list"></div>
+                </div>
+
+                <!-- Combat Buffs Section -->
+                <div id="buffs-stats" class="stats-section hidden">
+                    <div class="section-title">ACTIVE BUFFS</div>
+                    <div id="buffs-list"></div>
+                </div>
+            </div>
         </div>
         <div id="terminal">
             <div id="output"></div>

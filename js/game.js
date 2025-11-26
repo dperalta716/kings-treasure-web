@@ -18,6 +18,15 @@ export class Game {
     }
 
     /**
+     * Update sidebar with current character state
+     */
+    updateSidebar() {
+        if (this.character) {
+            this.terminal.sidebar.updateHero(this.character);
+        }
+    }
+
+    /**
      * Start the game
      */
     async start() {
@@ -31,6 +40,7 @@ export class Game {
 
         if (loadResult) {
             this.character = loadResult.character;
+            this.updateSidebar();
             this.terminal.print(`\nGame loaded! Resuming from ${loadResult.location.replace(/_/g, ' ')}...`);
             await this.terminal.delay(1000);
             return await this.resumeFromLocation(loadResult.location);
@@ -39,6 +49,7 @@ export class Game {
         // New game
         await this.terminal.waitForEnter("Press Enter to start a new adventure...");
         this.character = new Character("Hero");
+        this.updateSidebar();
         return await this.thiefsCrossroads();
     }
 
@@ -71,8 +82,8 @@ export class Game {
     /**
      * Run a battle
      */
-    async runBattle(enemyType) {
-        const battle = new Battle(this.terminal, this.character, enemyType);
+    async runBattle(enemyType, location = 'thiefs_crossroads') {
+        const battle = new Battle(this.terminal, this.character, enemyType, this.saveMenu, location);
         return await battle.run();
     }
 
@@ -82,6 +93,7 @@ export class Game {
     async visitShop() {
         const shop = new Shop(this.terminal, this.character);
         await shop.visit();
+        this.updateSidebar();
     }
 
     /**
@@ -90,6 +102,7 @@ export class Game {
     async visitAdvancedShop() {
         const shop = new Shop(this.terminal, this.character);
         await shop.visitAdvanced();
+        this.updateSidebar();
     }
 
     /**
@@ -190,13 +203,13 @@ export class Game {
 
         if (choice.toLowerCase() === 'swim' || choice.toLowerCase() === 's') {
             this.terminal.print("\nAs you swim across the lake, a ferocious shark appears!");
-            if (!await this.runBattle('shark')) {
+            if (!await this.runBattle('shark', 'thiefs_crossroads')) {
                 return await this.gameOver("You were defeated by the Ferocious Shark!");
             }
             this.terminal.print("\nAfter defeating the shark, you reach the other side of the lake.");
         } else if (choice.toLowerCase() === 'take' || choice.toLowerCase() === 't') {
             this.terminal.print("\nAs you row across the lake, a terrifying lake monster emerges from the depths!");
-            if (!await this.runBattle('lake_monster')) {
+            if (!await this.runBattle('lake_monster', 'thiefs_crossroads')) {
                 return await this.gameOver("You were dragged underwater by the Lake Monster!");
             }
             this.terminal.print("\nAfter defeating the lake monster, the boat takes you safely across.");
@@ -216,12 +229,12 @@ export class Game {
 
         if (Math.random() < 0.5) {
             this.terminal.print("\nYou encounter an evil wizard blocking your path!");
-            if (!await this.runBattle('wizard')) {
+            if (!await this.runBattle('wizard', 'thiefs_crossroads')) {
                 return await this.gameOver("You were defeated in battle!");
             }
         } else {
             this.terminal.print("\nA group of skeleton bandits ambushes you from behind the rocks!");
-            if (!await this.runBattle('skeleton_bandits')) {
+            if (!await this.runBattle('skeleton_bandits', 'thiefs_crossroads')) {
                 return await this.gameOver("You were defeated in battle!");
             }
         }
@@ -243,12 +256,12 @@ export class Game {
 
         if (choice.toLowerCase() === 'red' || choice.toLowerCase() === 'r') {
             this.terminal.print("\nBehind the red door, you find a savage bear rider guarding the passage!");
-            if (!await this.runBattle('bear_rider')) {
+            if (!await this.runBattle('bear_rider', 'hidden_passages')) {
                 return await this.gameOver("You were defeated by the bear rider!");
             }
         } else if (choice.toLowerCase() === 'blue' || choice.toLowerCase() === 'b') {
             this.terminal.print("\nAs you open the blue door, a fearsome dragon knight challenges you!");
-            if (!await this.runBattle('dragon_knight')) {
+            if (!await this.runBattle('dragon_knight', 'hidden_passages')) {
                 return await this.gameOver("You were defeated by the dragon knight!");
             }
         } else {
@@ -260,9 +273,6 @@ export class Game {
         this.terminal.print("\nAfter your victory, you notice a merchant's stall nearby.");
         this.terminal.print("Perhaps you should see what they're selling before continuing.");
         await this.visitShop();
-
-        // Offer save
-        await this.saveMenu.offerSave(this.character, 'hidden_passages');
 
         this.terminal.print("\nRested and restocked, you discover a hidden passage.");
         this.terminal.print("The passage splits into two dark corridors...");
@@ -289,12 +299,12 @@ export class Game {
 
                 if (Math.random() < 0.5) {
                     this.terminal.print("\nA massive figure emerges from the shadows...");
-                    if (!await this.runBattle('stone_golem')) {
+                    if (!await this.runBattle('stone_golem', 'convergence_paths')) {
                         return await this.gameOver("You were defeated in the Ancient Caverns!");
                     }
                 } else {
                     this.terminal.print("\nSomething scuttles across the ceiling...");
-                    if (!await this.runBattle('giant_spider')) {
+                    if (!await this.runBattle('giant_spider', 'convergence_paths')) {
                         return await this.gameOver("You were defeated in the Ancient Caverns!");
                     }
                 }
@@ -306,12 +316,12 @@ export class Game {
 
                 if (Math.random() < 0.5) {
                     this.terminal.print("\nOne of the statues begins to move...");
-                    if (!await this.runBattle('ancient_guardian')) {
+                    if (!await this.runBattle('ancient_guardian', 'convergence_paths')) {
                         return await this.gameOver("You were defeated in the Forgotten Temple!");
                     }
                 } else {
                     this.terminal.print("\nA sarcophagus creaks open...");
-                    if (!await this.runBattle('cursed_mummy')) {
+                    if (!await this.runBattle('cursed_mummy', 'convergence_paths')) {
                         return await this.gameOver("You were defeated in the Forgotten Temple!");
                     }
                 }
@@ -321,7 +331,6 @@ export class Game {
             }
         }
 
-        await this.saveMenu.offerSave(this.character, 'convergence_paths');
         this.terminal.print("\nAfter your challenging battle, you discover a massive gate that leads to three ornate doorways.");
         return await this.convergencePaths();
     }
@@ -353,7 +362,6 @@ export class Game {
             }
 
             if (result === true) {
-                await this.saveMenu.offerSave(this.character, 'grand_finale');
                 return await this.grandFinale();
             }
             return result;
@@ -371,13 +379,13 @@ export class Game {
         await this.terminal.waitForEnter();
 
         this.terminal.print("\nAs you advance, a Crystal Guardian blocks your path!");
-        if (!await this.runBattle('crystal_guardian')) {
+        if (!await this.runBattle('crystal_guardian', 'crystal_palace')) {
             return await this.gameOver("You were shattered by the Crystal Guardian!");
         }
 
         this.terminal.print("\nDeeper into the palace, you find yourself in the throne room.");
         this.terminal.print("The Crystal Queen rises from her throne, shards of crystal floating around her.");
-        if (!await this.runBattle('crystal_queen')) {
+        if (!await this.runBattle('crystal_queen', 'crystal_palace')) {
             return await this.gameOver("The Crystal Queen has frozen you into crystal!");
         }
 
@@ -397,13 +405,13 @@ export class Game {
         await this.terminal.waitForEnter();
 
         this.terminal.print("\nA Fire Elemental forms from the flames and attacks!");
-        if (!await this.runBattle('fire_elemental')) {
+        if (!await this.runBattle('fire_elemental', 'volcanic_forge')) {
             return await this.gameOver("You were consumed by the flames!");
         }
 
         this.terminal.print("\nAt the heart of the forge, you find the legendary Forge Master at work.");
         this.terminal.print("He turns to face you, wielding a hammer of pure flame.");
-        if (!await this.runBattle('forge_master')) {
+        if (!await this.runBattle('forge_master', 'volcanic_forge')) {
             return await this.gameOver("The Forge Master has hammered you into oblivion!");
         }
 
@@ -423,13 +431,13 @@ export class Game {
         await this.terminal.waitForEnter();
 
         this.terminal.print("\nA Merfolk Warrior swims toward you, trident raised!");
-        if (!await this.runBattle('merfolk_warrior')) {
+        if (!await this.runBattle('merfolk_warrior', 'sunken_ruins')) {
             return await this.gameOver("You were impaled by the Merfolk Warrior's trident!");
         }
 
         this.terminal.print("\nIn the central chamber of the ruins, you disturb a massive Kraken!");
         this.terminal.print("Its tentacles thrash as it rises to attack!");
-        if (!await this.runBattle('kraken')) {
+        if (!await this.runBattle('kraken', 'sunken_ruins')) {
             return await this.gameOver("The Kraken has dragged you into the depths!");
         }
 
@@ -477,7 +485,7 @@ export class Game {
         await this.terminal.waitForEnter();
 
         this.terminal.print("\nA Spectral Sentinel materializes before you, blocking your path!");
-        if (!await this.runBattle('spectral_sentinel')) {
+        if (!await this.runBattle('spectral_sentinel', 'phantom_citadel')) {
             return await this.gameOver("You were consumed by spectral energy!");
         }
 
@@ -487,13 +495,13 @@ export class Game {
         await this.visitAdvancedShop();
 
         this.terminal.print("\nAs you venture deeper into the citadel, you encounter a Phantom Knight guarding the inner chamber.");
-        if (!await this.runBattle('phantom_knight')) {
+        if (!await this.runBattle('phantom_knight', 'phantom_citadel')) {
             return await this.gameOver("The Phantom Knight has claimed your soul!");
         }
 
         this.terminal.print("\nAt the heart of the citadel stands the Lord of Echoes, beckoning you to your demise.");
         this.terminal.print("As you approach, countless voices whisper from within its form.");
-        if (!await this.runBattle('lord_of_echoes')) {
+        if (!await this.runBattle('lord_of_echoes', 'phantom_citadel')) {
             return await this.gameOver("The Lord of Echoes has erased your existence!");
         }
 
@@ -513,7 +521,7 @@ export class Game {
         await this.terminal.waitForEnter();
 
         this.terminal.print("\nAn Automaton Soldier activates and marches toward you!");
-        if (!await this.runBattle('automaton_soldier')) {
+        if (!await this.runBattle('automaton_soldier', 'clockwork_nexus')) {
             return await this.gameOver("You were dismantled by the Automaton Soldier!");
         }
 
@@ -523,13 +531,13 @@ export class Game {
         await this.visitAdvancedShop();
 
         this.terminal.print("\nDeeper in the nexus, you encounter a Clockmaker monitoring a wall of clocks.");
-        if (!await this.runBattle('time_warden')) {
+        if (!await this.runBattle('time_warden', 'clockwork_nexus')) {
             return await this.gameOver("The Clockmaker has erased you from history!");
         }
 
         this.terminal.print("\nAt the center of the nexus, the Time Warden adjusts the grand mechanism.");
         this.terminal.print("As you approach, time itself seems to stutter and skip around you.");
-        if (!await this.runBattle('clockmaker')) {
+        if (!await this.runBattle('clockmaker', 'clockwork_nexus')) {
             return await this.gameOver("The Time Warden has wound back your time to nothingness!");
         }
 
@@ -549,7 +557,7 @@ export class Game {
         await this.terminal.waitForEnter();
 
         this.terminal.print("\nA Gladiator Shade challenges you to combat in the arena!");
-        if (!await this.runBattle('gladiator_shade')) {
+        if (!await this.runBattle('gladiator_shade', 'forgotten_coliseum')) {
             return await this.gameOver("You were slain in glorious combat by the Gladiator Shade!");
         }
 
@@ -559,13 +567,13 @@ export class Game {
         await this.visitAdvancedShop();
 
         this.terminal.print("\nAs you finish your business, the Arena Master descends to test your skill!");
-        if (!await this.runBattle('arena_master')) {
+        if (!await this.runBattle('arena_master', 'forgotten_coliseum')) {
             return await this.gameOver("The Arena Master has proven your unworthiness!");
         }
 
         this.terminal.print("\nThe crowd roars as The Eternal Champion emerges for the final match.");
         this.terminal.print("Legends say it has never known defeat in thousands of years of combat.");
-        if (!await this.runBattle('eternal_champion')) {
+        if (!await this.runBattle('eternal_champion', 'forgotten_coliseum')) {
             return await this.gameOver("The Eternal Champion remains undefeated. Your journey ends here!");
         }
 

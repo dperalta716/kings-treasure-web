@@ -356,21 +356,21 @@ export function getDefeatedEnemySprite(enemyType) {
 }
 
 export function getWeaponSprite(weaponName) {
-    const filename = weaponName.toLowerCase().replace(/['\s]/g, '_').replace(/_+/g, '_');
+    const filename = weaponName.toLowerCase().replace(/'/g, '').replace(/\s+/g, '_');
     return `assets/sprites/weapons/${filename}.png`;
 }
 
 export function getShieldSprite(shieldName) {
-    const filename = shieldName.toLowerCase().replace(/['\s]/g, '_').replace(/_+/g, '_');
+    const filename = shieldName.toLowerCase().replace(/'/g, '').replace(/\s+/g, '_');
     return `assets/sprites/shields/${filename}.png`;
 }
 
 export function getItemSprite(itemName) {
-    const filename = itemName.toLowerCase().replace(/['\s]/g, '_').replace(/_+/g, '_');
+    const filename = itemName.toLowerCase().replace(/'/g, '').replace(/\s+/g, '_');
     return `assets/sprites/items/${filename}.png`;
 }
 
 export function getLocationSprite(locationName) {
-    const filename = locationName.toLowerCase().replace(/['\s]/g, '_').replace(/_+/g, '_');
+    const filename = locationName.toLowerCase().replace(/'/g, '').replace(/\s+/g, '_');
     return `assets/sprites/locations/${filename}.png`;
 }
