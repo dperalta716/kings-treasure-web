@@ -264,12 +264,17 @@ def edit_art(item_id, edit_prompt):
     print(f"\nEditing: {item['name']} ({item_id})")
     print(f"Edit instruction: {edit_prompt}")
 
+    # Copy to temp before backup (so we can still read it)
+    temp_source = Path(f"/tmp/{item_id}_source.webp")
+    import shutil
+    shutil.copy(webp_file, temp_source)
+
     # Backup existing
     backup_existing(sprite_dir, backup_dir, item_id)
 
-    # Edit the image
+    # Edit the image from temp copy
     print("  Calling Gemini API (edit mode)...")
-    image_data = edit_image(webp_file, edit_prompt)
+    image_data = edit_image(temp_source, edit_prompt)
 
     if not image_data:
         return False

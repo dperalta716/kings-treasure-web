@@ -518,8 +518,8 @@ background
 ```
 16-bit pixel art, dark fantasy RPG game sprite, detailed shading,
 vibrant colors, sword with blade shaped like clock pendulum,
-gears in the guard, time distortion around edge, displayed in
-clockwork shrine, temporal nexus background
+gears in the guard, time distortion around edge, no character,
+displayed alone in clockwork shrine, temporal nexus background
 ```
 
 ### Pharaoh's Khopesh
@@ -567,7 +567,7 @@ altar, golem cave background
 ```
 
 ### Trident of the Depths
-**ID:** `trident_of_depths`
+**ID:** `trident_of_the_depths`
 **Category:** weapons
 
 ```
