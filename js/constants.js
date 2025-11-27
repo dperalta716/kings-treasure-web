@@ -50,7 +50,7 @@ export const ENEMY_DATA = {
 
     // Forgotten Coliseum
     gladiator_shade: { name: "Gladiator Shade", hp: 52, attack: 18, defense: 5, xp: 95, gold: 44, isBoss: false },
-    arena_master: { name: "Arena Master", hp: 60, attack: 20, defense: 6, xp: 108, gold: 50, isBoss: false },
+    arena_master: { name: "Arena Master", hp: 65, attack: 20, defense: 6, xp: 108, gold: 50, isBoss: false },
     eternal_champion: { name: "The Eternal Champion", hp: 75, attack: 28, defense: 8, xp: 125, gold: 62, isBoss: true }
 };
 
