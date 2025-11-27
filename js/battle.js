@@ -506,11 +506,12 @@ export class Battle {
         if (this.character.sharkAmuletUsed) {
             this.terminal.separator();
             this.terminal.print("[yellow]*** SHARK TOOTH AMULET CONSUMED ***[/yellow]");
+            this.terminal.showSprite(getItemSprite('shark_tooth_amulet_crumbled'), 'Shark Tooth Amulet');
             this.terminal.print("The amulet crumbles to dust, its magical power spent.");
             this.terminal.separator();
             this.character.hasSharkAmulet = false;
             this.character.sharkAmuletUsed = false;
-            await this.terminal.delay(1500);
+            await this.terminal.waitForEnter();
         }
 
         // Temp effect removal message

@@ -128,6 +128,7 @@ const SPRITES = [
     'assets/sprites/items/thunderbolt.webp',
     'assets/sprites/items/soul_drain.webp',
     'assets/sprites/items/shark_tooth_amulet.webp',
+    'assets/sprites/items/shark_tooth_amulet_crumbled.webp',
     'assets/sprites/items/leviathan_scale_gauntlets.webp',
     'assets/sprites/items/ghostweave_cloak.webp',
     'assets/sprites/items/chronometer_pendant.webp',
