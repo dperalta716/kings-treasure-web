@@ -22,6 +22,8 @@ const SPRITES = [
     'assets/sprites/locations/clockwork_nexus.webp',
     'assets/sprites/locations/forgotten_coliseum.webp',
     'assets/sprites/locations/treasure.webp',
+    'assets/sprites/locations/treasure_castle.webp',
+    'assets/sprites/locations/wisdom_ending.webp',
     'assets/sprites/locations/game_over.webp',
     'assets/sprites/locations/level_up.webp',
 
@@ -51,6 +53,7 @@ const SPRITES = [
     'assets/sprites/enemies/gladiator_shade.webp',
     'assets/sprites/enemies/arena_master.webp',
     'assets/sprites/enemies/eternal_champion.webp',
+    'assets/sprites/enemies/treasures_guardian.webp',
 
     // Battle sprites (attacking pose)
     'assets/sprites/enemies/skeleton_bandits_battle.webp',
@@ -78,6 +81,7 @@ const SPRITES = [
     'assets/sprites/enemies/gladiator_shade_battle.webp',
     'assets/sprites/enemies/arena_master_battle.webp',
     'assets/sprites/enemies/eternal_champion_battle.webp',
+    'assets/sprites/enemies/treasures_guardian_battle.webp',
 
     // Defeated enemies
     'assets/sprites/enemies/skeleton_bandits_defeated.webp',
@@ -105,6 +109,7 @@ const SPRITES = [
     'assets/sprites/enemies/gladiator_shade_defeated.webp',
     'assets/sprites/enemies/arena_master_defeated.webp',
     'assets/sprites/enemies/eternal_champion_defeated.webp',
+    'assets/sprites/enemies/treasures_guardian_defeated.webp',
 
     // Weapons
     'assets/sprites/weapons/rusty_sword.webp',

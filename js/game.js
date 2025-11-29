@@ -67,7 +67,8 @@ export class Game {
             'grand_finale': () => this.grandFinale(),
             'phantom_citadel': () => this.phantomCitadel(),
             'clockwork_nexus': () => this.clockworkNexus(),
-            'forgotten_coliseum': () => this.forgottenColiseum()
+            'forgotten_coliseum': () => this.forgottenColiseum(),
+            'treasure_castle': () => this.treasureCastle()
         };
 
         const handler = handlers[location];
@@ -514,8 +515,8 @@ export class Game {
         }
 
         this.terminal.print("\nWith the Lord of Echoes defeated, the citadel begins to fade away.");
-        this.terminal.print("As the spectral walls dissolve, you see the treasure chamber beyond!");
-        return await this.treasureRoom();
+        this.terminal.print("As the spectral walls dissolve, you see a grand castle in the distance!");
+        return await this.treasureCastle();
     }
 
     /**
@@ -550,8 +551,8 @@ export class Game {
         }
 
         this.terminal.print("\nWith the Time Warden defeated, the grand mechanism begins to open.");
-        this.terminal.print("The gears align to reveal a hidden passage to the treasure chamber!");
-        return await this.treasureRoom();
+        this.terminal.print("The gears align to reveal a hidden passage... leading to a grand castle!");
+        return await this.treasureCastle();
     }
 
     /**
@@ -586,7 +587,185 @@ export class Game {
         }
 
         this.terminal.print("\nAs you defeat The Eternal Champion, the spectral crowd erupts in cheers.");
-        this.terminal.print("A great door opens at the far end of the arena, revealing the treasure chamber!");
-        return await this.treasureRoom();
+        this.terminal.print("A great door opens at the far end of the arena... revealing the path to a grand castle!");
+        return await this.treasureCastle();
+    }
+
+    // ==========================================================================
+    // TREASURE'S GUARDIAN ENCOUNTER
+    // ==========================================================================
+
+    /**
+     * Treasure Castle - exterior before entering
+     */
+    async treasureCastle() {
+        this.terminal.showSprite(getLocationSprite('treasure_castle'), "The King's Castle");
+        this.terminal.print("\n=== THE KING'S CASTLE ===");
+        this.terminal.print("Before you stands a grand castle, ancient and imposing.");
+        this.terminal.print("Golden light emanates from within. This is it - the legendary resting place of the King's Treasure.");
+        this.terminal.print("\nMassive wooden doors, adorned with golden fixtures, await your touch.");
+
+        await this.terminal.waitForEnter("Press Enter to open the castle doors...");
+
+        return await this.guardianAntechamber();
+    }
+
+    /**
+     * Guardian Antechamber - meeting the Guardian
+     */
+    async guardianAntechamber() {
+        this.terminal.showSprite('assets/sprites/enemies/treasures_guardian.webp', "The Treasure's Guardian");
+
+        // Pre-battle dialogue sequence
+        this.terminal.print("\nYou enter a vast stone chamber with vaulted ceilings. Torchlight flickers against ancient walls.");
+        this.terminal.print("At the far end stand grand ornate wooden doors - and before them, [purple]something terrible[/purple].");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\nA figure in golden armor stands motionless. Where its face should be, there is nothing -");
+        this.terminal.print("only [purple]swirling purple flames[/purple] that pour upward like a cursed crown.");
+        this.terminal.print("The fire casts dancing shadows across the chamber walls.");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[italic]It does not speak. But its voice resounds within your mind.[/italic]");
+        this.terminal.print("\n[purple]\"Another seeker. Another soul burning with ambition.\"[/purple]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[purple]\"I was the first to stand where you stand now. The first to fight through impossible odds to reach this place.\"[/purple]");
+        this.terminal.print("\n[italic]The featureless flames seem to regard you - somehow you feel its ancient gaze despite the absence of eyes.[/italic]");
+        this.terminal.print("\n[purple]\"And I found exactly what I sought.\"[/purple]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[purple]\"The treasure awaits beyond me. But tell me, seeker... when you dream of wealth, do you dream of what comes after? Of the weight of having everything you ever wanted?\"[/purple]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[purple]\"I am bound to test you. That is my purpose now. But hear this warning...\"[/purple]");
+        this.terminal.print("\n[italic]The spectral flames flare brighter as it raises its golden blade - lightning crackles along the edge.[/italic]");
+        this.terminal.print("\n[purple]\"Some treasures are not meant to be found. Some victories are simply the beginning of a longer defeat.\"[/purple]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[purple]\"But you will not turn back. None of you ever do. I know this, because I did not turn back either.\"[/purple]");
+        this.terminal.print("\n[italic]The Guardian assumes its battle stance. Purple fire erupts around its form.[/italic]");
+        this.terminal.print("\n[purple]\"Prove yourself worthy of your ambition... or be freed from it forever.\"[/purple]");
+        await this.terminal.waitForEnter("Press Enter to face The Treasure's Guardian...");
+
+        // Battle - note: we pass a special flag to handle this battle differently
+        const battle = new Battle(this.terminal, this.character, 'treasures_guardian', this.saveMenu, 'treasure_castle');
+        battle.isGuardianBattle = true; // Special flag for post-battle handling
+        const victory = await battle.run();
+
+        if (!victory) {
+            return await this.gameOver("The Treasure's Guardian has claimed another soul...");
+        }
+
+        // Post-battle is handled here, not in battle.js
+        return await this.guardianPostBattle();
+    }
+
+    /**
+     * Post-Guardian battle - transformation and choice
+     */
+    async guardianPostBattle() {
+        this.terminal.showSprite('assets/sprites/enemies/treasures_guardian_defeated.webp', "The Guardian - Freed");
+
+        this.terminal.print("\n[italic]The Treasure's Guardian staggers. The purple flames that engulfed him begin to flicker and fade.[/italic]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[italic]As you watch, the spectral fire dissolves into wisps of smoke. The cursed golden armor cracks and falls away in pieces. Beneath it... a man. Just a man.[/italic]");
+        this.terminal.print("\n[italic]His hair no longer flame but simple gold, his eyes no longer burning but human - tired, grateful, finally at peace.[/italic]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[italic]His voice echoes in your mind, clearer now, no longer distorted by the curse.[/italic]");
+        this.terminal.print("\n[cyan]\"You have... broken it. The hold it had on me. After all these centuries...\"[/cyan]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[italic]He looks down at his hands - flesh again, not living gold.[/italic]");
+        this.terminal.print("\n[cyan]\"I am free.\"[/cyan]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[italic]He looks up at you, and for the first time you see who he truly was - a treasure hunter, like you. Someone who sought glory and found only imprisonment.[/italic]");
+        this.terminal.print("\n[cyan]\"The treasure is yours by right of conquest. But I give you what no one gave me...\"[/cyan]");
+        this.terminal.print("\n[cyan]\"A choice.\"[/cyan]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[italic]He gestures toward the grand doors behind him, then to the exit you came from.[/italic]");
+        this.terminal.print("\n[cyan]\"Enter and claim your prize. Or heed my warning and walk away while you still can. While you are still... yourself.\"[/cyan]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[italic]His human eyes meet yours, pleading:[/italic]");
+        this.terminal.print("\n[cyan]\"I was the first to find the treasure. Look what it did to me. Please... choose wisely.\"[/cyan]");
+
+        // The choice
+        this.terminal.print("\n[bold]What do you do?[/bold]");
+        this.terminal.print("1. Enter the Treasure Room");
+        this.terminal.print("2. Heed the warning and walk away");
+
+        while (true) {
+            const choice = await this.terminal.prompt();
+
+            if (choice === '1' || choice.toLowerCase().includes('enter') || choice.toLowerCase().includes('treasure')) {
+                this.terminal.print("\n[italic]You step past the freed Guardian toward the golden doors.[/italic]");
+                this.terminal.print("\n[cyan]\"So be it. May you fare better than I did... though I fear you will not.\"[/cyan]");
+                await this.terminal.waitForEnter();
+                return await this.treasureRoom();
+            } else if (choice === '2' || choice.toLowerCase().includes('walk') || choice.toLowerCase().includes('heed') || choice.toLowerCase().includes('away')) {
+                return await this.wisdomEnding();
+            } else {
+                this.terminal.print("Please choose 1 or 2.");
+            }
+        }
+    }
+
+    /**
+     * Wisdom Ending - walking away from the treasure
+     */
+    async wisdomEnding() {
+        this.terminal.showSprite(getLocationSprite('wisdom_ending'), "A New Beginning");
+
+        this.terminal.print("\n[italic]You turn your back on the golden light. The man who was once the Guardian watches in silence as you walk away.[/italic]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[cyan]\"You are the first... the only one... to choose differently.\"[/cyan]");
+        this.terminal.print("\n[italic]His voice in your mind carries something new - not sorrow, but wonder.[/italic]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[cyan]\"I spent centuries guarding that door, waiting for someone strong enough to defeat me. But you... you are the first one wise enough to walk away.\"[/cyan]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[italic]You feel his presence fade from your mind, but his final words linger:[/italic]");
+        this.terminal.print("\n[cyan]\"Thank you. You have freed us both.\"[/cyan]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[italic]You leave the castle behind, treasure-less but whole. The sunrise greets you as you step outside - a new day, a new beginning.[/italic]");
+        this.terminal.print("\n[italic]And somehow, that feels like the greater victory.[/italic]");
+        await this.terminal.waitForEnter();
+
+        this.terminal.print("\n[victory]THE END[/victory]");
+        this.terminal.print("[bold]You chose wisdom over wealth.[/bold]");
+
+        // Show final stats
+        this.terminal.print("\n[bold]Your final adventure stats:[/bold]");
+        this.terminal.print(`Level: ${this.character.level}`);
+        this.terminal.print(`HP: ${this.character.hp}/${this.character.maxHp}`);
+        this.terminal.print(`Gold: ${this.character.gold}`);
+        this.terminal.print(`XP: ${this.character.xp}`);
+        this.terminal.print(`Weapon: ${this.character.weapon} (${this.character.getWeaponDamage()} damage)`);
+        this.terminal.print(`Shield: ${this.character.shield} (${this.character.getShieldDefense()} defense)`);
+
+        const items = this.character.getSpecialItems();
+        if (items.length > 0) {
+            this.terminal.print(`Special Items: ${items.join(', ')}`);
+        }
+
+        this.terminal.print("\nWould you like to play again? (yes/no)");
+        const choice = await this.terminal.prompt();
+
+        if (choice.toLowerCase().startsWith('y')) {
+            this.character = new Character("Hero");
+            this.terminal.print("\nStarting a new adventure...");
+            return await this.thiefsCrossroads();
+        }
+
+        this.terminal.print("\n[bold]Thanks for playing! Goodbye![/bold]");
+        return true;
     }
 }

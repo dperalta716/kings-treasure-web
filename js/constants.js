@@ -51,7 +51,10 @@ export const ENEMY_DATA = {
     // Forgotten Coliseum
     gladiator_shade: { name: "Gladiator Shade", hp: 55, attack: 18, defense: 5, xp: 95, gold: 44, isBoss: false },
     arena_master: { name: "Arena Master", hp: 65, attack: 20, defense: 6, xp: 108, gold: 50, isBoss: false },
-    eternal_champion: { name: "The Eternal Champion", hp: 75, attack: 28, defense: 8, xp: 125, gold: 62, isBoss: true }
+    eternal_champion: { name: "The Eternal Champion", hp: 75, attack: 28, defense: 8, xp: 125, gold: 62, isBoss: true },
+
+    // Final Guardian (after Grand Finale bosses)
+    treasures_guardian: { name: "The Treasure's Guardian", hp: 90, attack: 30, defense: 10, xp: 150, gold: 0, isBoss: true }
 };
 
 // =============================================================================
@@ -92,7 +95,7 @@ export const WEAPON_DAMAGE = {
     // Special item weapons
     "Echo Blade": 10,
     "Pendulum Blade": 11,
-    "Legacy Blade": 12
+    "Legacy Blade": 15
 };
 
 // =============================================================================

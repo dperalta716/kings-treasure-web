@@ -457,6 +457,23 @@ export class Battle {
      * Handle victory rewards and drops
      */
     async handleVictory() {
+        // Special handling for Guardian battle - minimal victory, post-battle handled in game.js
+        if (this.isGuardianBattle) {
+            // Just award XP silently, no fanfare - the story continues in game.js
+            this.character.gainXp(this.enemy.xpReward);
+            // Handle shark amulet consumption if used
+            if (this.character.sharkAmuletUsed) {
+                this.character.hasSharkAmulet = false;
+                this.character.sharkAmuletUsed = false;
+            }
+            this.character.resetTempEffects();
+            // Legacy Blade tracking
+            if (this.character.hasLegacyBlade) {
+                this.character.legacyBladeKills++;
+            }
+            return;
+        }
+
         // Show defeated sprite
         this.terminal.showSprite(getDefeatedEnemySprite(this.enemyType), `${this.enemy.name} Defeated`);
         this.terminal.victoryBanner();
