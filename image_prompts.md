@@ -1124,14 +1124,13 @@ and magical particles, dark mystical background
 **Category:** characters
 
 ```
-16-bit pixel art, dark fantasy RPG character selection screen,
-detailed shading, vibrant colors, two humanoid silhouettes
-standing side by side, male figure on left slightly taller
+16-bit pixel art, dark fantasy RPG game sprite, detailed shading,
+vibrant colors, two humanoid silhouettes standing side by side
+taking up most of the frame, male figure on left slightly taller
 and broader, female figure on right with feminine proportions,
-both in mysterious shadowy form with ethereal golden glow outline,
-grand throne room background with towering stone pillars draped
-in royal banners, warm torchlight casting dramatic shadows,
-ancient tapestries depicting legendary heroes on the walls
+both in mysterious shadowy form with soft ethereal glow outline,
+dark misty forest background with fog rolling between ancient
+trees, no text, no UI elements, no game interface
 ```
 
 ### Male Warrior

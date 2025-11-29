@@ -58,8 +58,8 @@ export class Game {
         this.terminal.print("   HP: 30 | ATK: 5 | DEF: 2");
         this.terminal.print("\n2. [magenta]MAGE[/magenta] - A wielder of arcane power");
         this.terminal.print("   HP: 25 | ATK: 6 | DEF: 1 | +25% spell damage, Mana Bolt");
-        this.terminal.print("\n3. [green]ROGUE[/green] - A cunning critical striker");
-        this.terminal.print("   HP: 28 | ATK: 5 | DEF: 1 | 30% crit chance");
+        this.terminal.print("\n3. [cyan]ROGUE[/cyan] - A cunning critical striker");
+        this.terminal.print("   HP: 28 | ATK: 5 | DEF: 1 | 30% critical hit chance");
 
         const classMap = { '1': 'warrior', '2': 'mage', '3': 'rogue' };
         const classNames = { 'warrior': 'Warrior', 'mage': 'Mage', 'rogue': 'Rogue' };
