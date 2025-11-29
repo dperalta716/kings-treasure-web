@@ -719,7 +719,7 @@ export class Game {
         await this.terminal.waitForEnter();
 
         this.terminal.print("\nHis human eyes meet yours, pleading.");
-        this.terminal.print("\n[cyan][italic]\"I was the first to find the treasure. Look what it did to me. Please... choose wisely.\"[/italic][/cyan]");
+        this.terminal.print("\n[cyan][italic]\"I beseech you... choose wisely.\"[/italic][/cyan]");
 
         // The choice
         this.terminal.print("\n[bold]What do you do?[/bold]");
