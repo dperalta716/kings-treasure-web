@@ -193,24 +193,6 @@ export class Terminal {
     }
 
     /**
-     * Flash sprite red when it takes damage
-     */
-    async flashDamage() {
-        this.sprite.classList.add('flash-damage');
-        await this.delay(300);
-        this.sprite.classList.remove('flash-damage');
-    }
-
-    /**
-     * Lunge animation when enemy attacks
-     */
-    async lungeAttack() {
-        this.sprite.classList.add('lunge-attack');
-        await this.delay(400);
-        this.sprite.classList.remove('lunge-attack');
-    }
-
-    /**
      * Display a sprite image with fade transition
      */
     showSprite(src, label = '') {
