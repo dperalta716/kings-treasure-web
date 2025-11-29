@@ -495,9 +495,12 @@ export class Battle {
             if (this.enemy.name === "Kraken") {
                 critChance = 0.10;
                 critMultiplier = 1.5;
-            } else if (this.enemy.name === "The Clockmaker") {
+            } else if (this.enemy.name === "Time Warden") {
                 critChance = 0.15;
                 critMultiplier = 1.75;
+            } else if (this.enemy.name === "The Treasure's Guardian") {
+                critChance = 0.20;
+                critMultiplier = 1.25;
             }
 
             if (Math.random() < critChance) {

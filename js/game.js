@@ -55,9 +55,9 @@ export class Game {
             this.character = new Character("Hero");
             // Set up a character ready for advanced shop / final boss testing
             this.character.level = 5;
-            this.character.baseMaxHp = 60;
-            this.character.maxHp = 60;
-            this.character.hp = 60;
+            this.character.baseMaxHp = 75;
+            this.character.maxHp = 75;
+            this.character.hp = 75;
             this.character.attack = 12;
             this.character.defense = 6;
             this.character.gold = 204;
@@ -563,13 +563,13 @@ export class Game {
         await this.visitAdvancedShop();
 
         this.terminal.print("\nDeeper in the nexus, you encounter a Clockmaker monitoring a wall of clocks.");
-        if (!await this.runBattle('time_warden', 'clockwork_nexus')) {
+        if (!await this.runBattle('clockmaker', 'clockwork_nexus')) {
             return await this.gameOver("The Clockmaker has erased you from history!");
         }
 
         this.terminal.print("\nAt the center of the nexus, the Time Warden adjusts the grand mechanism.");
         this.terminal.print("As you approach, time itself seems to stutter and skip around you.");
-        if (!await this.runBattle('clockmaker', 'clockwork_nexus')) {
+        if (!await this.runBattle('time_warden', 'clockwork_nexus')) {
             return await this.gameOver("The Time Warden has wound back your time to nothingness!");
         }
 

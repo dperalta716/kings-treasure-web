@@ -45,8 +45,8 @@ export const ENEMY_DATA = {
 
     // Clockwork Nexus
     automaton_soldier: { name: "Automaton Soldier", hp: 50, attack: 18, defense: 5, xp: 92, gold: 42, isBoss: false },
-    time_warden: { name: "The Clockmaker", hp: 58, attack: 20, defense: 5, xp: 105, gold: 48, isBoss: false },
-    clockmaker: { name: "Time Warden", hp: 72, attack: 26, defense: 7, xp: 120, gold: 58, isBoss: true },
+    clockmaker: { name: "The Clockmaker", hp: 58, attack: 20, defense: 5, xp: 105, gold: 48, isBoss: false },
+    time_warden: { name: "Time Warden", hp: 72, attack: 26, defense: 7, xp: 120, gold: 58, isBoss: true },
 
     // Forgotten Coliseum
     gladiator_shade: { name: "Gladiator Shade", hp: 55, attack: 18, defense: 5, xp: 95, gold: 44, isBoss: false },
@@ -183,13 +183,13 @@ export const SPECIAL_ITEM_DROPS = {
         effect: "20% chance to reflect damage back at attackers!",
         becomesShield: "Gear Shield"
     },
-    time_warden: {
+    clockmaker: {
         attr: "hasChronoPendant",
         name: "Chronometer Pendant",
         description: "A mystical timepiece that bends the flow of battle.",
         effect: "15% chance to take an extra turn!"
     },
-    clockmaker: {
+    time_warden: {
         attr: "hasPendulumBlade",
         name: "Pendulum Blade",
         description: "A blade that swings with devastating precision.",

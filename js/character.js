@@ -102,8 +102,9 @@ export class Character {
             // Store old values for display
             const oldMaxHp = this.baseMaxHp;
 
-            // Apply bonuses
-            this.baseMaxHp += LEVEL_UP_BONUSES.hp;
+            // Apply bonuses (level 4 gets +15 HP, others get +10)
+            const hpGain = this.level === 4 ? 15 : LEVEL_UP_BONUSES.hp;
+            this.baseMaxHp += hpGain;
             this.maxHp = this.baseMaxHp + this.tempHpBoost;
             this.hp = this.maxHp;  // Full heal on level up
             this.attack += LEVEL_UP_BONUSES.attack;
@@ -111,7 +112,7 @@ export class Character {
 
             const levelUpInfo = {
                 newLevel: this.level,
-                hpGain: LEVEL_UP_BONUSES.hp,
+                hpGain: hpGain,
                 attackGain: LEVEL_UP_BONUSES.attack,
                 defenseGain: LEVEL_UP_BONUSES.defense,
                 newSpell: null
