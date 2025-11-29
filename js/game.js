@@ -639,14 +639,14 @@ export class Game {
     async guardianAntechamber() {
         this.terminal.showSprite('assets/sprites/enemies/treasures_guardian.webp', "The Treasure's Guardian");
 
-        // Pre-battle dialogue sequence
-        this.terminal.print("\nYou enter a vast stone chamber with vaulted ceilings. Torchlight flickers against ancient walls.");
-        this.terminal.print("At the far end stand grand ornate wooden doors - and before them, [purple]something terrible[/purple].");
+        // Pre-battle dialogue sequence - all narration in italics
+        this.terminal.print("\n[italic]You enter a vast stone chamber with vaulted ceilings. Torchlight flickers against ancient walls.[/italic]");
+        this.terminal.print("[italic]At the far end stand grand ornate wooden doors - and before them, [purple]something terrible[/purple].[/italic]");
         await this.terminal.waitForEnter();
 
-        this.terminal.print("\nA figure in golden armor stands motionless. Where its face should be, there is nothing -");
-        this.terminal.print("only [purple]swirling purple flames[/purple] that pour upward like a cursed crown.");
-        this.terminal.print("The fire casts dancing shadows across the chamber walls.");
+        this.terminal.print("\n[italic]A figure in golden armor stands motionless. Where its face should be, there is nothing -[/italic]");
+        this.terminal.print("[italic]only [purple]swirling purple flames[/purple] that pour upward like a cursed crown.[/italic]");
+        this.terminal.print("[italic]The fire casts dancing shadows across the chamber walls.[/italic]");
         await this.terminal.waitForEnter();
 
         this.terminal.print("\n[italic]It does not speak. But its voice resounds within your mind.[/italic]");
@@ -670,6 +670,10 @@ export class Game {
         this.terminal.print("\n[italic]The Guardian assumes its battle stance. Purple fire erupts around its form.[/italic]");
         this.terminal.print("\n[purple]\"Prove yourself worthy of your ambition... or be freed from it forever.\"[/purple]");
         await this.terminal.waitForEnter("Press Enter to face The Treasure's Guardian...");
+
+        // Flash to battle sprite before boss encounter
+        await this.terminal.showBattleSprite('assets/sprites/enemies/treasures_guardian_battle.webp', "The Treasure's Guardian");
+        this.terminal.bossWarning();
 
         // Battle - note: we pass a special flag to handle this battle differently
         const battle = new Battle(this.terminal, this.character, 'treasures_guardian', this.saveMenu, 'treasure_castle');
