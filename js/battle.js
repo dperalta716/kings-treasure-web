@@ -151,13 +151,16 @@ export class Battle {
         const options = ['1. Attack', '2. Defend (reduce damage by 50%)'];
         let optionNum = 3;
 
-        if (this.character.potions > 0) {
-            options.push(`${optionNum}. Use Health Potion (${this.character.potions} remaining)`);
-            optionNum++;
-        }
+        // Check if player has ANY potions
+        const hasPotions = this.character.potions > 0 ||
+                          this.character.superiorPotions > 0 ||
+                          this.character.strengthElixirs > 0 ||
+                          this.character.defenseElixirs > 0 ||
+                          this.character.masterStrengthElixirs > 0 ||
+                          this.character.ultimateDefensePotions > 0;
 
-        if (this.character.superiorPotions > 0) {
-            options.push(`${optionNum}. Use Superior Potion (${this.character.superiorPotions} remaining)`);
+        if (hasPotions) {
+            options.push(`${optionNum}. Use Potion`);
             optionNum++;
         }
 
@@ -186,11 +189,8 @@ export class Battle {
             return await this.performAttack();
         } else if (choice === '2') {
             return this.performDefend();
-        } else if (choice === '3' && this.character.potions > 0) {
-            return this.usePotion();
-        } else if ((choice === '3' && this.character.potions <= 0 && this.character.superiorPotions > 0) ||
-                   (choice === '4' && this.character.superiorPotions > 0)) {
-            return this.useSuperiorPotion();
+        } else if (choice === '3' && hasPotions) {
+            return await this.usePotionMenu();
         } else {
             const spellOptionNum = options.findIndex(o => o.includes('Cast Spell'));
             if (spellOptionNum !== -1 && choice === String(spellOptionNum + 1)) {
@@ -283,6 +283,95 @@ export class Battle {
         this.terminal.print("Your maximum HP is temporarily increased by 10 for this battle!");
         this.terminal.print(`You are now at full health: ${this.character.hp}/${this.character.maxHp} HP`);
         return 'continue';
+    }
+
+    /**
+     * Show potion menu with all available potions
+     */
+    async usePotionMenu() {
+        this.terminal.print("\n[bold]Available Potions:[/bold]");
+
+        const potionOptions = [];
+        let optNum = 1;
+
+        if (this.character.potions > 0) {
+            potionOptions.push({ key: optNum, type: 'health', name: 'Health Potion', count: this.character.potions, desc: 'Restore 25 HP' });
+            this.terminal.print(`  ${optNum}. Health Potion (${this.character.potions}) - Restore 25 HP`);
+            optNum++;
+        }
+        if (this.character.superiorPotions > 0) {
+            potionOptions.push({ key: optNum, type: 'superior', name: 'Superior Health Potion', count: this.character.superiorPotions, desc: 'Full heal + 10 temp HP' });
+            this.terminal.print(`  ${optNum}. Superior Health Potion (${this.character.superiorPotions}) - Full heal + 10 temp HP`);
+            optNum++;
+        }
+        if (this.character.strengthElixirs > 0) {
+            potionOptions.push({ key: optNum, type: 'strength', name: 'Strength Elixir', count: this.character.strengthElixirs, desc: '+2 attack this battle' });
+            this.terminal.print(`  ${optNum}. Strength Elixir (${this.character.strengthElixirs}) - +2 attack this battle`);
+            optNum++;
+        }
+        if (this.character.defenseElixirs > 0) {
+            potionOptions.push({ key: optNum, type: 'defense', name: 'Defense Potion', count: this.character.defenseElixirs, desc: '+2 defense this battle' });
+            this.terminal.print(`  ${optNum}. Defense Potion (${this.character.defenseElixirs}) - +2 defense this battle`);
+            optNum++;
+        }
+        if (this.character.masterStrengthElixirs > 0) {
+            potionOptions.push({ key: optNum, type: 'masterStrength', name: "Master's Strength Elixir", count: this.character.masterStrengthElixirs, desc: '+5 attack this battle' });
+            this.terminal.print(`  ${optNum}. Master's Strength Elixir (${this.character.masterStrengthElixirs}) - +5 attack this battle`);
+            optNum++;
+        }
+        if (this.character.ultimateDefensePotions > 0) {
+            potionOptions.push({ key: optNum, type: 'ultimateDefense', name: 'Ultimate Defense Potion', count: this.character.ultimateDefensePotions, desc: '+5 defense this battle' });
+            this.terminal.print(`  ${optNum}. Ultimate Defense Potion (${this.character.ultimateDefensePotions}) - +5 defense this battle`);
+            optNum++;
+        }
+
+        this.terminal.print("  b. Back");
+
+        const choice = await this.terminal.prompt();
+
+        if (choice.toLowerCase() === 'b') {
+            return await this.playerTurn();
+        }
+
+        const choiceNum = parseInt(choice);
+        const selectedPotion = potionOptions.find(p => p.key === choiceNum);
+
+        if (!selectedPotion) {
+            this.terminal.print("Invalid choice.");
+            return await this.usePotionMenu();
+        }
+
+        // Consume the selected potion
+        switch (selectedPotion.type) {
+            case 'health':
+                return this.usePotion();
+            case 'superior':
+                return this.useSuperiorPotion();
+            case 'strength':
+                this.character.strengthElixirs--;
+                this.character.tempAttackBoost += 2;
+                this.terminal.print("\nYou drink a Strength Elixir!");
+                this.terminal.print("[green]+2 attack[/green] for the rest of this battle!");
+                return 'continue';
+            case 'defense':
+                this.character.defenseElixirs--;
+                this.character.tempDefenseBoost += 2;
+                this.terminal.print("\nYou drink a Defense Potion!");
+                this.terminal.print("[green]+2 defense[/green] for the rest of this battle!");
+                return 'continue';
+            case 'masterStrength':
+                this.character.masterStrengthElixirs--;
+                this.character.tempAttackBoost += 5;
+                this.terminal.print("\nYou drink a Master's Strength Elixir!");
+                this.terminal.print("[green]+5 attack[/green] for the rest of this battle!");
+                return 'continue';
+            case 'ultimateDefense':
+                this.character.ultimateDefensePotions--;
+                this.character.tempDefenseBoost += 5;
+                this.terminal.print("\nYou drink an Ultimate Defense Potion!");
+                this.terminal.print("[green]+5 defense[/green] for the rest of this battle!");
+                return 'continue';
+        }
     }
 
     /**
@@ -675,14 +764,6 @@ export class Battle {
             this.terminal.print(`You are facing [red][bold]${this.enemy.name}[/bold][/red], a powerful enemy!`);
             this.terminal.print("Be prepared for special attacks!");
             await this.terminal.waitForEnter();
-        }
-
-        // Show temp boosts
-        if (this.character.tempAttackBoost > 0) {
-            this.terminal.print(`Your Strength Elixir gives you +${this.character.tempAttackBoost} attack!`);
-        }
-        if (this.character.tempDefenseBoost > 0) {
-            this.terminal.print(`Your Defense Potion gives you +${this.character.tempDefenseBoost} defense!`);
         }
 
         // Battle loop

@@ -31,6 +31,14 @@ export class Sidebar {
         this.potionCount = document.getElementById('potion-count');
         this.superiorPotionCount = document.getElementById('superior-potion-count');
         this.superiorPotionsRow = document.getElementById('superior-potions-row');
+        this.strengthElixirCount = document.getElementById('strength-elixir-count');
+        this.strengthElixirsRow = document.getElementById('strength-elixirs-row');
+        this.defensePotionCount = document.getElementById('defense-potion-count');
+        this.defensePotionsRow = document.getElementById('defense-potions-row');
+        this.masterStrengthCount = document.getElementById('master-strength-count');
+        this.masterStrengthRow = document.getElementById('master-strength-row');
+        this.ultimateDefenseCount = document.getElementById('ultimate-defense-count');
+        this.ultimateDefenseRow = document.getElementById('ultimate-defense-row');
 
         // Spells elements
         this.spellsSection = document.getElementById('spells-stats');
@@ -76,6 +84,35 @@ export class Sidebar {
             this.superiorPotionCount.textContent = character.superiorPotions;
         } else {
             this.superiorPotionsRow.classList.add('hidden');
+        }
+
+        // Buff potions
+        if (character.strengthElixirs > 0) {
+            this.strengthElixirsRow.classList.remove('hidden');
+            this.strengthElixirCount.textContent = character.strengthElixirs;
+        } else {
+            this.strengthElixirsRow.classList.add('hidden');
+        }
+
+        if (character.defenseElixirs > 0) {
+            this.defensePotionsRow.classList.remove('hidden');
+            this.defensePotionCount.textContent = character.defenseElixirs;
+        } else {
+            this.defensePotionsRow.classList.add('hidden');
+        }
+
+        if (character.masterStrengthElixirs > 0) {
+            this.masterStrengthRow.classList.remove('hidden');
+            this.masterStrengthCount.textContent = character.masterStrengthElixirs;
+        } else {
+            this.masterStrengthRow.classList.add('hidden');
+        }
+
+        if (character.ultimateDefensePotions > 0) {
+            this.ultimateDefenseRow.classList.remove('hidden');
+            this.ultimateDefenseCount.textContent = character.ultimateDefensePotions;
+        } else {
+            this.ultimateDefenseRow.classList.add('hidden');
         }
 
         // Spells

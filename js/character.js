@@ -22,6 +22,10 @@ export class Character {
         // Inventory
         this.potions = 0;
         this.superiorPotions = 0;
+        this.strengthElixirs = 0;
+        this.defenseElixirs = 0;
+        this.masterStrengthElixirs = 0;
+        this.ultimateDefensePotions = 0;
         this.spells = [];
         this.usedSpells = [];
 
@@ -243,6 +247,10 @@ export class Character {
             shield: this.shield,
             potions: this.potions,
             superiorPotions: this.superiorPotions,
+            strengthElixirs: this.strengthElixirs,
+            defenseElixirs: this.defenseElixirs,
+            masterStrengthElixirs: this.masterStrengthElixirs,
+            ultimateDefensePotions: this.ultimateDefensePotions,
             spells: [...this.spells],
             // Special items
             hasLeviathanGauntlets: this.hasLeviathanGauntlets,
@@ -277,6 +285,10 @@ export class Character {
         char.shield = data.shield;
         char.potions = data.potions;
         char.superiorPotions = data.superiorPotions || 0;
+        char.strengthElixirs = data.strengthElixirs || 0;
+        char.defenseElixirs = data.defenseElixirs || 0;
+        char.masterStrengthElixirs = data.masterStrengthElixirs || 0;
+        char.ultimateDefensePotions = data.ultimateDefensePotions || 0;
         char.spells = data.spells || [];
 
         // Special items

@@ -777,9 +777,9 @@ pirate treasure hoard background
 
 ```
 16-bit pixel art, dark fantasy RPG game sprite, detailed shading,
-vibrant colors, muscular flask with bubbling orange strength
-potion, lightning bolt etched on glass, displayed on iron shelf,
-warrior guild background
+vibrant colors, glass potion bottle with glowing orange liquid,
+bubbling and swirling, sword icon etched on glass, cork stopper,
+displayed on wooden shop counter, medieval fantasy shop background
 ```
 
 ### superior_health_potion

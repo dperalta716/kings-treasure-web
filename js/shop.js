@@ -379,11 +379,13 @@ export class Shop {
             this.character.potions++;
             this.terminal.print(`You now have ${this.character.potions} Health Potions.`);
         } else if (name === "Strength Elixir") {
-            this.character.tempAttackBoost = 2;
-            this.terminal.print("You feel stronger! Your attacks will deal +2 damage in your next battle.");
+            this.character.strengthElixirs++;
+            this.terminal.print("You bought a Strength Elixir! Use it in battle for +2 attack.");
+            this.terminal.print(`You now have ${this.character.strengthElixirs} Strength Elixirs.`);
         } else if (name === "Defense Potion") {
-            this.character.tempDefenseBoost = 2;
-            this.terminal.print("You feel more protected! You'll take less damage in your next battle.");
+            this.character.defenseElixirs++;
+            this.terminal.print("You bought a Defense Potion! Use it in battle for +2 defense.");
+            this.terminal.print(`You now have ${this.character.defenseElixirs} Defense Potions.`);
         }
 
         this.terminal.sidebar.updateHero(this.character);
@@ -413,16 +415,16 @@ export class Shop {
         if (name === "Superior Health Potion") {
             this.character.superiorPotions++;
             this.terminal.print("You bought a Superior Health Potion!");
-            this.terminal.print("This potion will restore HP completely AND temporarily boost max HP by 10.");
+            this.terminal.print("Use it in battle to restore HP fully AND boost max HP by 10.");
             this.terminal.print(`You now have ${this.character.superiorPotions} Superior Health Potions.`);
         } else if (name === "Master's Strength Elixir") {
-            this.character.tempAttackBoost = 5;
-            this.terminal.print("You bought a Master's Strength Elixir!");
-            this.terminal.print("Your attack will be increased by +5 for your next battle.");
+            this.character.masterStrengthElixirs++;
+            this.terminal.print("You bought a Master's Strength Elixir! Use it in battle for +5 attack.");
+            this.terminal.print(`You now have ${this.character.masterStrengthElixirs} Master's Strength Elixirs.`);
         } else if (name === "Ultimate Defense Potion") {
-            this.character.tempDefenseBoost = 5;
-            this.terminal.print("You bought an Ultimate Defense Potion!");
-            this.terminal.print("Your defense will be increased by +5 for your next battle.");
+            this.character.ultimateDefensePotions++;
+            this.terminal.print("You bought an Ultimate Defense Potion! Use it in battle for +5 defense.");
+            this.terminal.print(`You now have ${this.character.ultimateDefensePotions} Ultimate Defense Potions.`);
         }
 
         this.terminal.sidebar.updateHero(this.character);
