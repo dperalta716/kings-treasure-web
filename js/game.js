@@ -746,8 +746,6 @@ export class Game {
      * Wisdom Ending - walking away from the treasure
      */
     async wisdomEnding() {
-        this.terminal.showSprite(getLocationSprite('wisdom_ending'), "A New Beginning");
-
         this.terminal.print("\nYou turn your back on the golden light. The man who was once the Guardian watches in silence as you walk away.");
         await this.terminal.waitForEnter();
 
@@ -762,6 +760,7 @@ export class Game {
         this.terminal.print("\n[cyan]\"Thank you. You have freed us both.\"[/cyan]");
         await this.terminal.waitForEnter();
 
+        this.terminal.showSprite(getLocationSprite('wisdom_ending'), "A New Beginning");
         this.terminal.print("\nYou leave the castle behind, treasure-less but whole. The sunrise greets you as you step outside - a new day, a new beginning.");
         this.terminal.print("And somehow, that feels like the greater victory.");
         await this.terminal.waitForEnter();
