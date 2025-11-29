@@ -5,7 +5,7 @@ import { Character } from './character.js';
 import { Battle } from './battle.js';
 import { Shop } from './shop.js';
 import { SaveMenu } from './saves.js';
-import { getLocationSprite } from './constants.js';
+import { getLocationSprite, CHARACTER_CLASSES, getCharacterSprite } from './constants.js';
 
 /**
  * Main Game class
@@ -24,6 +24,73 @@ export class Game {
         if (this.character) {
             this.terminal.sidebar.updateHero(this.character);
         }
+    }
+
+    /**
+     * Character creation - gender and class selection
+     */
+    async characterCreation() {
+        // Step 1: Gender Selection
+        this.terminal.showSprite(getCharacterSprite('gender_selection'), 'Choose Your Hero');
+        this.terminal.print("\n[bold]Choose Your Hero[/bold]\n");
+        this.terminal.print("  1. Male");
+        this.terminal.print("  2. Female");
+
+        let gender = null;
+        while (!gender) {
+            const input = await this.terminal.prompt();
+            if (input === '1') {
+                gender = 'male';
+            } else if (input === '2') {
+                gender = 'female';
+            } else {
+                this.terminal.print("Please type 1 or 2.");
+            }
+        }
+
+        // Step 2: Class Selection with preview cycling
+        let previewClass = 'warrior';
+        this.terminal.showSprite(getCharacterSprite(`${gender}_warrior`), 'Warrior');
+
+        this.terminal.print("\n[bold]Choose Your Path[/bold]");
+        this.terminal.print("[dim](Type 1-3 to preview, Enter to confirm)[/dim]\n");
+        this.terminal.print("1. [red]WARRIOR[/red] - A battle-hardened soldier");
+        this.terminal.print("   HP: 30 | ATK: 5 | DEF: 2");
+        this.terminal.print("\n2. [magenta]MAGE[/magenta] - A wielder of arcane power");
+        this.terminal.print("   HP: 25 | ATK: 6 | DEF: 1 | +25% spell damage, Mana Bolt");
+        this.terminal.print("\n3. [green]ROGUE[/green] - A cunning critical striker");
+        this.terminal.print("   HP: 28 | ATK: 5 | DEF: 1 | 30% crit chance");
+
+        const classMap = { '1': 'warrior', '2': 'mage', '3': 'rogue' };
+        const classNames = { 'warrior': 'Warrior', 'mage': 'Mage', 'rogue': 'Rogue' };
+
+        while (true) {
+            const input = await this.terminal.prompt();
+            if (classMap[input]) {
+                previewClass = classMap[input];
+                this.terminal.showSprite(getCharacterSprite(`${gender}_${previewClass}`), classNames[previewClass]);
+            } else if (input === '') {
+                // Enter confirms current preview
+                break;
+            }
+        }
+
+        // Create and initialize character
+        this.character = new Character("Hero");
+        this.character.initializeClass(gender, previewClass);
+
+        const classData = CHARACTER_CLASSES[previewClass];
+        this.terminal.print(`\n[bold]You are a ${classData.name}![/bold]`);
+        this.terminal.print(classData.description);
+
+        if (previewClass === 'mage') {
+            this.terminal.print("\n[cyan]You start with the Mana Bolt spell![/cyan]");
+        } else if (previewClass === 'rogue') {
+            this.terminal.print("\n[cyan]Your critical hit chance is 30%![/cyan]");
+        }
+
+        this.terminal.print("\nPress Enter to begin your adventure...", 'dim');
+        await this.terminal.prompt();
     }
 
     /**
@@ -53,6 +120,7 @@ export class Game {
         // Debug code: skip to advanced shop for testing
         if (startInput.toLowerCase() === 'testboss') {
             this.character = new Character("Hero");
+            this.character.initializeClass('male', 'warrior');
             // Set up a character ready for advanced shop / final boss testing
             this.character.level = 4;
             this.character.baseMaxHp = 65;
@@ -71,7 +139,8 @@ export class Game {
             return await this.grandFinale();
         }
 
-        this.character = new Character("Hero");
+        // Character creation flow
+        await this.characterCreation();
         this.updateSidebar();
         return await this.thiefsCrossroads();
     }
@@ -145,8 +214,9 @@ export class Game {
             return false;
         }
 
-        // Reset and restart
-        this.character = new Character("Hero");
+        // Reset and restart with character creation
+        await this.characterCreation();
+        this.updateSidebar();
         return await this.thiefsCrossroads();
     }
 
@@ -177,8 +247,9 @@ export class Game {
         const choice = await this.terminal.prompt();
 
         if (choice.toLowerCase().startsWith('y')) {
-            this.character = new Character("Hero");
             this.terminal.print("\nStarting a new adventure...");
+            await this.characterCreation();
+            this.updateSidebar();
             return await this.thiefsCrossroads();
         }
 
@@ -786,8 +857,9 @@ export class Game {
         const choice = await this.terminal.prompt();
 
         if (choice.toLowerCase().startsWith('y')) {
-            this.character = new Character("Hero");
             this.terminal.print("\nStarting a new adventure...");
+            await this.characterCreation();
+            this.updateSidebar();
             return await this.thiefsCrossroads();
         }
 

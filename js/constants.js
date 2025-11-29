@@ -63,6 +63,11 @@ export const ENEMY_DATA = {
 // Format: weapon_name -> damage
 
 export const WEAPON_DAMAGE = {
+    // Class starting weapons
+    "Soldier's Blade": 3,   // Warrior (same as Rusty Sword)
+    "Mystic Wand": 2,       // Mage
+    "Twin Daggers": 4,      // Rogue
+
     // Starting and early game weapons
     "Rusty Sword": 3,
     "Iron Dagger": 5,
@@ -104,6 +109,10 @@ export const WEAPON_DAMAGE = {
 // Format: shield_name -> defense
 
 export const SHIELD_DEFENSE = {
+    // Class starting shields
+    "Infantry Shield": 1,   // Warrior (same as Wooden Buckler)
+    "Leather Bracer": 0,    // Rogue (no defense, thematic)
+
     "Wooden Buckler": 1,
     "Wooden Shield": 2,
     "Steel Shield": 3,
@@ -292,6 +301,13 @@ export const SHOP_SPELLS = {
 // =============================================================================
 
 export const SPELLS = {
+    // Mage-only starting spell
+    "Mana Bolt": {
+        unlockLevel: null,  // Mage class only, not level-unlocked
+        type: "attack",
+        damageBonus: 4,
+        description: "A focused burst of arcane energy (Attack + 4 damage)"
+    },
     "Arcane Blast": {
         unlockLevel: 2,
         type: "attack",
@@ -381,3 +397,48 @@ export function getLocationSprite(locationName) {
     const filename = locationName.toLowerCase().replace(/'/g, '').replace(/\s+/g, '_');
     return `assets/sprites/locations/${filename}.webp`;
 }
+
+export function getCharacterSprite(spriteName) {
+    // spriteName can be 'gender_selection', 'male_warrior', 'female_mage', etc.
+    return `assets/sprites/characters/${spriteName}.webp`;
+}
+
+// =============================================================================
+// CHARACTER CLASSES
+// =============================================================================
+
+export const CHARACTER_CLASSES = {
+    warrior: {
+        name: "Warrior",
+        description: "A battle-hardened soldier - the classic experience",
+        hp: 30,
+        attack: 5,
+        defense: 2,
+        weapon: "Soldier's Blade",
+        shield: "Infantry Shield",
+        passives: {},
+        startingSpells: []
+    },
+    mage: {
+        name: "Mage",
+        description: "A wielder of arcane power with devastating spells",
+        hp: 25,
+        attack: 6,
+        defense: 1,
+        weapon: "Mystic Wand",
+        shield: null,
+        passives: { spellDamageBonus: 0.25 },
+        startingSpells: ["Mana Bolt"]
+    },
+    rogue: {
+        name: "Rogue",
+        description: "A cunning fighter who strikes with deadly precision",
+        hp: 28,
+        attack: 5,
+        defense: 1,
+        weapon: "Twin Daggers",
+        shield: "Leather Bracer",
+        passives: { critChanceBonus: 0.10 },
+        startingSpells: []
+    }
+};

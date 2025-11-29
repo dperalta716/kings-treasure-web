@@ -1103,3 +1103,104 @@ sand suspended in air, swirling clock hands and gears floating,
 purple and gold temporal energy radiating outward, crystallized
 time fragments, clockwork citadel background
 ```
+
+### Mana Bolt
+**ID:** `mana_bolt`
+**Category:** spells
+
+```
+16-bit pixel art, dark fantasy RPG game effect sprite, detailed
+shading, vibrant colors, focused burst of blue arcane energy,
+swirling magical projectile with glowing core, trailing sparkles
+and magical particles, dark mystical background
+```
+
+---
+
+## Characters (7)
+
+### Gender Selection
+**ID:** `gender_selection`
+**Category:** characters
+
+```
+16-bit pixel art, dark fantasy RPG character selection screen,
+detailed shading, vibrant colors, two humanoid silhouettes
+standing side by side labeled "1" and "2", male figure on left
+slightly taller and broader, female figure on right with
+feminine proportions, both in mysterious shadowy form with
+soft glow outline, ornate stone archway background with
+magical runes
+```
+
+### Male Warrior
+**ID:** `male_warrior`
+**Category:** characters
+
+```
+16-bit pixel art, dark fantasy RPG game character sprite, detailed
+shading, vibrant colors, strong muscular male warrior in brown
+leather armor with metal studs, short dark hair, holding steel
+sword and round wooden shield with metal rim, confident battle
+stance, castle training grounds background with weapon racks
+```
+
+### Female Warrior
+**ID:** `female_warrior`
+**Category:** characters
+
+```
+16-bit pixel art, dark fantasy RPG game character sprite, detailed
+shading, vibrant colors, athletic female warrior in brown leather
+armor with metal studs, long braided hair, holding steel sword
+and round wooden shield with metal rim, confident battle stance,
+castle training grounds background with weapon racks
+```
+
+### Male Mage
+**ID:** `male_mage`
+**Category:** characters
+
+```
+16-bit pixel art, dark fantasy RPG game character sprite, detailed
+shading, vibrant colors, male mage in flowing purple and blue robes,
+short beard, holding ornate mystic wand with glowing crystal tip,
+arcane energy swirling around hands, magical library background
+with floating books and glowing runes
+```
+
+### Female Mage
+**ID:** `female_mage`
+**Category:** characters
+
+```
+16-bit pixel art, dark fantasy RPG game character sprite, detailed
+shading, vibrant colors, female mage in flowing purple and blue robes,
+long flowing hair, holding ornate mystic wand with glowing crystal tip,
+arcane energy swirling around hands, magical library background
+with floating books and glowing runes
+```
+
+### Male Rogue
+**ID:** `male_rogue`
+**Category:** characters
+
+```
+16-bit pixel art, dark fantasy RPG game character sprite, detailed
+shading, vibrant colors, male ranger in hooded dark green and brown
+cloth cloak, leather bracers and boots, rugged features like Aragorn,
+dual wielding curved daggers, stealthy crouched pose, shadowy forest
+path background with misty moonlight filtering through trees
+```
+
+### Female Rogue
+**ID:** `female_rogue`
+**Category:** characters
+
+```
+16-bit pixel art, dark fantasy RPG game character sprite, detailed
+shading, vibrant colors, female ranger in hooded dark green and brown
+cloth cloak, leather bracers and boots, sharp features, dual wielding
+curved daggers, stealthy crouched pose, shadowy forest path background
+with misty moonlight filtering through trees
+```

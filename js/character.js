@@ -1,7 +1,7 @@
 /**
  * Character - Player character class
  */
-import { WEAPON_DAMAGE, SHIELD_DEFENSE, getXpForLevel, LEVEL_UP_BONUSES, SPELLS } from './constants.js';
+import { WEAPON_DAMAGE, SHIELD_DEFENSE, getXpForLevel, LEVEL_UP_BONUSES, SPELLS, CHARACTER_CLASSES } from './constants.js';
 
 export class Character {
     constructor(name = "Hero") {
@@ -14,6 +14,10 @@ export class Character {
         this.defense = 2;
         this.xp = 0;
         this.gold = 0;
+
+        // Character creation choices
+        this.gender = null;           // 'male' or 'female'
+        this.characterClass = null;   // 'warrior', 'mage', 'rogue'
 
         // Equipment
         this.weapon = "Rusty Sword";
@@ -70,6 +74,56 @@ export class Character {
      */
     getShieldDefense() {
         return SHIELD_DEFENSE[this.shield] || 1;
+    }
+
+    /**
+     * Initialize character with class-specific stats and equipment
+     */
+    initializeClass(gender, className) {
+        const classData = CHARACTER_CLASSES[className];
+        if (!classData) return;
+
+        this.gender = gender;
+        this.characterClass = className;
+
+        // Set stats from class
+        this.baseMaxHp = classData.hp;
+        this.maxHp = classData.hp;
+        this.hp = classData.hp;
+        this.attack = classData.attack;
+        this.defense = classData.defense;
+
+        // Set starting equipment
+        this.weapon = classData.weapon;
+        this.shield = classData.shield;
+
+        // Add starting spells (e.g., Mage gets Mana Bolt)
+        if (classData.startingSpells && classData.startingSpells.length > 0) {
+            this.spells = [...classData.startingSpells];
+        }
+    }
+
+    /**
+     * Get crit chance (base 20% + class bonus)
+     */
+    getCritChance() {
+        let critChance = 0.20;
+        const classData = CHARACTER_CLASSES[this.characterClass];
+        if (classData && classData.passives.critChanceBonus) {
+            critChance += classData.passives.critChanceBonus;
+        }
+        return critChance;
+    }
+
+    /**
+     * Get spell damage bonus multiplier (0 for non-mages)
+     */
+    getSpellDamageBonus() {
+        const classData = CHARACTER_CLASSES[this.characterClass];
+        if (classData && classData.passives.spellDamageBonus) {
+            return classData.passives.spellDamageBonus;
+        }
+        return 0;
     }
 
     /**
@@ -244,6 +298,10 @@ export class Character {
             defense: this.defense,
             xp: this.xp,
             gold: this.gold,
+            // Character creation
+            gender: this.gender,
+            characterClass: this.characterClass,
+            // Equipment
             weapon: this.weapon,
             shield: this.shield,
             potions: this.potions,
@@ -282,6 +340,10 @@ export class Character {
         char.defense = data.defense;
         char.xp = data.xp;
         char.gold = data.gold;
+        // Character creation
+        char.gender = data.gender || null;
+        char.characterClass = data.characterClass || null;
+        // Equipment
         char.weapon = data.weapon;
         char.shield = data.shield;
         char.potions = data.potions;

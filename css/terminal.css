@@ -469,6 +469,14 @@ body {
 .italic { font-style: italic; }
 .dim { opacity: 0.6; }
 
+/* Character class colors */
+.hero-class {
+    font-size: 0.9em;
+}
+.class-warrior { color: #ff6b6b; }
+.class-mage { color: #cc99ff; }
+.class-rogue { color: #98fb98; }
+
 /* Special text effects */
 .critical {
     color: #ffff44;
