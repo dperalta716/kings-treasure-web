@@ -701,25 +701,25 @@ export class Game {
         this.terminal.print("His hair no longer flame but simple gold, his eyes no longer burning but human - tired, grateful, finally at peace.");
         await this.terminal.waitForEnter();
 
-        this.terminal.print("\nHis voice echoes in your mind, clearer now, no longer distorted by the curse.");
-        this.terminal.print("\n[cyan][italic]\"You have... broken it. The hold it had on me. After all these centuries...\"[/italic][/cyan]");
+        this.terminal.print("\nHe speaks, his voice hoarse from centuries of silence.");
+        this.terminal.print("\n[cyan]\"You have... broken it. The hold it had on me. After all these centuries...\"[/cyan]");
         await this.terminal.waitForEnter();
 
         this.terminal.print("\nHe looks down at his hands - flesh again, no longer living gold.");
-        this.terminal.print("\n[cyan][italic]\"I am free.\"[/italic][/cyan]");
+        this.terminal.print("\n[cyan]\"I am free.\"[/cyan]");
         await this.terminal.waitForEnter();
 
         this.terminal.print("\nHe looks up at you, and for the first time you see who he truly was - a treasure hunter, like you. Someone who sought glory and found only imprisonment.");
-        this.terminal.print("\n[cyan][italic]\"The treasure is yours by right of conquest. But I give you what no one gave me...\"[/italic][/cyan]");
-        this.terminal.print("\n[cyan][italic]\"A choice.\"[/italic][/cyan]");
+        this.terminal.print("\n[cyan]\"The treasure is yours by right of conquest. But I give you what no one gave me...\"[/cyan]");
+        this.terminal.print("\n[cyan]\"A choice.\"[/cyan]");
         await this.terminal.waitForEnter();
 
         this.terminal.print("\nHe gestures toward the grand doors behind him, then to the exit you came from.");
-        this.terminal.print("\n[cyan][italic]\"Enter and claim your prize. Or heed my warning and walk away while you still can. While you are still... yourself.\"[/italic][/cyan]");
+        this.terminal.print("\n[cyan]\"Enter and claim your prize. Or heed my warning and walk away while you still can. While you are still... yourself.\"[/cyan]");
         await this.terminal.waitForEnter();
 
         this.terminal.print("\nHis human eyes meet yours, pleading.");
-        this.terminal.print("\n[cyan][italic]\"I beseech you... choose wisely.\"[/italic][/cyan]");
+        this.terminal.print("\n[cyan]\"I beseech you... choose wisely.\"[/cyan]");
 
         // The choice
         this.terminal.print("\n[bold]What do you do?[/bold]");
@@ -731,7 +731,7 @@ export class Game {
 
             if (choice === '1' || choice.toLowerCase().includes('enter') || choice.toLowerCase().includes('treasure')) {
                 this.terminal.print("\nYou step past the freed Guardian toward the golden doors.");
-                this.terminal.print("\n[cyan][italic]\"So be it. May you fare better than I did... though I fear you will not.\"[/italic][/cyan]");
+                this.terminal.print("\n[cyan]\"So be it. May you fare better than I did... though I fear you will not.\"[/cyan]");
                 await this.terminal.waitForEnter();
                 return await this.treasureRoom();
             } else if (choice === '2' || choice.toLowerCase().includes('walk') || choice.toLowerCase().includes('heed') || choice.toLowerCase().includes('away')) {
@@ -751,15 +751,15 @@ export class Game {
         this.terminal.print("\nYou turn your back on the golden light. The man who was once the Guardian watches in silence as you walk away.");
         await this.terminal.waitForEnter();
 
-        this.terminal.print("\n[cyan][italic]\"You are the first... the only one... to choose differently.\"[/italic][/cyan]");
-        this.terminal.print("\nHis voice in your mind carries something new - not sorrow, but wonder.");
+        this.terminal.print("\n[cyan]\"You are the first... the only one... to choose differently.\"[/cyan]");
+        this.terminal.print("\nHis voice carries something new - not sorrow, but wonder.");
         await this.terminal.waitForEnter();
 
-        this.terminal.print("\n[cyan][italic]\"I spent centuries guarding that door, waiting for someone strong enough to defeat me. But you... you are the first one wise enough to walk away.\"[/italic][/cyan]");
+        this.terminal.print("\n[cyan]\"I spent centuries guarding that door, waiting for someone strong enough to defeat me. But you... you are the first one wise enough to walk away.\"[/cyan]");
         await this.terminal.waitForEnter();
 
-        this.terminal.print("\nYou feel his presence fade from your mind, but his final words linger.");
-        this.terminal.print("\n[cyan][italic]\"Thank you. You have freed us both.\"[/italic][/cyan]");
+        this.terminal.print("\nHis final words follow you as you leave.");
+        this.terminal.print("\n[cyan]\"Thank you. You have freed us both.\"[/cyan]");
         await this.terminal.waitForEnter();
 
         this.terminal.print("\nYou leave the castle behind, treasure-less but whole. The sunrise greets you as you step outside - a new day, a new beginning.");
