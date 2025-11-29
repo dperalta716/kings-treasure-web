@@ -523,10 +523,17 @@ export class Battle {
             await this.handleWeaponDrop(weaponDrop);
         }
 
-        // Always drop a health potion
-        this.character.potions++;
-        this.terminal.print("\nYou found a [green]Health Potion[/green]!");
-        this.terminal.showSprite(getItemSprite('health_potion'), 'Health Potion');
+        // Drop a potion - Grand Finale bosses drop superior potions
+        const grandFinaleBosses = ['lord_of_echoes', 'time_warden', 'eternal_champion'];
+        if (grandFinaleBosses.includes(this.enemyType)) {
+            this.character.superiorPotions++;
+            this.terminal.print("\nYou found a [cyan]Superior Health Potion[/cyan]!");
+            this.terminal.showSprite(getItemSprite('superior_health_potion'), 'Superior Health Potion');
+        } else {
+            this.character.potions++;
+            this.terminal.print("\nYou found a [green]Health Potion[/green]!");
+            this.terminal.showSprite(getItemSprite('health_potion'), 'Health Potion');
+        }
         await this.terminal.waitForEnter();
 
         // Handle shark amulet consumption
