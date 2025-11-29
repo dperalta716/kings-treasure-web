@@ -398,7 +398,7 @@ export class Battle {
         }
 
         const idx = parseInt(choice) - 1;
-        if (idx < 0 || idx >= available.length) {
+        if (isNaN(idx) || idx < 0 || idx >= available.length) {
             this.terminal.print("Invalid choice.");
             return await this.castSpell();
         }
