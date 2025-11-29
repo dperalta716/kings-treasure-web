@@ -69,7 +69,7 @@ export const WEAPON_DAMAGE = {
     "Bronze Mace": 6,
     "Steel Sword": 6,
     "Battle Axe": 7,
-    "Knight's Blade": 8,
+    "Knight's Blade": 7,
     "Enchanted Sword": 8,
     "Dragonslayer": 10,
 
