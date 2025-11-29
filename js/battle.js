@@ -53,6 +53,11 @@ export function calculateDamage(attacker, defender, isPlayer = true) {
         if (attacker.hasLegacyBlade && attacker.legacyBladeKills > 0) {
             baseDamage += attacker.legacyBladeKills;
         }
+
+        // Temp attack boost from potions
+        if (attacker.tempAttackBoost > 0) {
+            baseDamage += attacker.tempAttackBoost;
+        }
     } else {
         // Enemy attacking
         baseDamage = attacker.attack;
@@ -270,7 +275,7 @@ export class Battle {
     usePotion() {
         const healAmount = this.character.usePotion();
         this.terminal.print(`\nYou drink a Health Potion and recover [green]${healAmount}[/green] HP!`);
-        this.terminal.print(`You are now at full health: ${this.character.hp}/${this.character.maxHp} HP`);
+        this.terminal.print(`HP: ${this.character.hp}/${this.character.maxHp}`);
         return 'continue';
     }
 
@@ -427,7 +432,7 @@ export class Battle {
             const result = calculateDamage(this.character, this.enemy, true);
             this.enemy.takeDamage(result.damage);
 
-            if (result.critical) {
+            if (result.isCritical) {
                 this.terminal.print(`You strike for ${this.terminal.damageText(result.damage, true)}!`);
             } else {
                 this.terminal.print(`You strike for ${this.terminal.damageText(result.damage)} damage!`);

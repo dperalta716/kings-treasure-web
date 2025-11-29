@@ -73,10 +73,10 @@ export class Character {
     }
 
     /**
-     * Get total defense (base + shield)
+     * Get total defense (base + shield + temp boost)
      */
     getTotalDefense() {
-        return this.defense + this.getShieldDefense();
+        return this.defense + this.getShieldDefense() + this.tempDefenseBoost;
     }
 
     /**
@@ -153,14 +153,20 @@ export class Character {
     }
 
     /**
-     * Use a superior health potion (heals 40 HP, not full)
+     * Use a superior health potion (full heal + 10 temp max HP)
      */
     useSuperiorPotion() {
         if (this.superiorPotions <= 0) return false;
 
         this.superiorPotions--;
-        const healAmount = Math.min(40, this.maxHp - this.hp);
-        this.hp = Math.min(this.maxHp, this.hp + 40);
+
+        // Add 10 temp max HP
+        this.tempHpBoost += 10;
+        this.maxHp = this.baseMaxHp + this.tempHpBoost;
+
+        // Full heal
+        const healAmount = this.maxHp - this.hp;
+        this.hp = this.maxHp;
         return healAmount;
     }
 
