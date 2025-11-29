@@ -54,7 +54,7 @@ export const ENEMY_DATA = {
     eternal_champion: { name: "The Eternal Champion", hp: 75, attack: 28, defense: 8, xp: 125, gold: 62, isBoss: true },
 
     // Final Guardian (after Grand Finale bosses)
-    treasures_guardian: { name: "The Treasure's Guardian", hp: 90, attack: 30, defense: 10, xp: 150, gold: 0, isBoss: true }
+    treasures_guardian: { name: "The Treasure's Guardian", hp: 115, attack: 30, defense: 10, xp: 150, gold: 0, isBoss: true }
 };
 
 // =============================================================================
