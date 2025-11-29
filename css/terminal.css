@@ -566,6 +566,30 @@ body {
     animation: flashToWhite 0.4s ease-out;
 }
 
+/* Red flash when enemy takes damage */
+@keyframes flashRed {
+    0% { filter: brightness(1) sepia(0) saturate(1); }
+    25% { filter: brightness(1.2) sepia(1) saturate(3) hue-rotate(-20deg); }
+    50% { filter: brightness(1.5) sepia(1) saturate(4) hue-rotate(-20deg); }
+    100% { filter: brightness(1) sepia(0) saturate(1); }
+}
+
+#current-sprite.flash-damage {
+    animation: flashRed 0.3s ease-out;
+}
+
+/* Enemy lunge toward player */
+@keyframes lunge {
+    0% { transform: scale(1) translateY(0); }
+    30% { transform: scale(1.15) translateY(10px); }
+    60% { transform: scale(1.2) translateY(15px); }
+    100% { transform: scale(1) translateY(0); }
+}
+
+#current-sprite.lunge-attack {
+    animation: lunge 0.4s ease-out;
+}
+
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }

@@ -235,6 +235,7 @@ export class Battle {
         }
 
         this.enemy.takeDamage(result.damage);
+        await this.terminal.flashDamage();
         this.terminal.print(`${message} and deal ${this.terminal.damageText(result.damage, result.isCritical)} damage!`);
 
         // Echo Blade second attack
@@ -415,6 +416,7 @@ export class Battle {
                 damage = Math.floor(damage * (1 + spellBonus));
             }
             this.enemy.takeDamage(damage);
+            await this.terminal.flashDamage();
             this.terminal.print(`\nYou cast [magenta]${spellName}[/magenta]!`);
             if (spellBonus > 0) {
                 this.terminal.print(`[cyan]Your arcane mastery amplifies the spell![/cyan]`);
@@ -438,6 +440,7 @@ export class Battle {
             // Deal normal attack damage
             const result = calculateDamage(this.character, this.enemy, true);
             this.enemy.takeDamage(result.damage);
+            await this.terminal.flashDamage();
 
             if (result.isCritical) {
                 this.terminal.print(`You strike for ${this.terminal.damageText(result.damage, true)}!`);
@@ -456,6 +459,7 @@ export class Battle {
         } else if (spell.type === 'damageAndHeal') {
             const damage = spell.damage;
             this.enemy.takeDamage(damage);
+            await this.terminal.flashDamage();
             const healAmount = Math.min(damage, this.character.maxHp - this.character.hp);
             this.character.hp += healAmount;
             this.terminal.print(`\nYou cast [magenta]${spellName}[/magenta]!`);
@@ -540,7 +544,8 @@ export class Battle {
             }
         }
 
-        // Apply damage
+        // Apply damage with lunge animation
+        await this.terminal.lungeAttack();
         this.terminal.print(`The [bold]${this.enemy.name}[/bold] attacks you for [red]${damage}[/red] damage!`);
         const isDead = this.character.takeDamage(damage);
 
