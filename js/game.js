@@ -47,7 +47,30 @@ export class Game {
         }
 
         // New game
-        await this.terminal.waitForEnter("Press Enter to start a new adventure...");
+        this.terminal.print("Press Enter to start a new adventure...", 'dim');
+        const startInput = await this.terminal.prompt();
+
+        // Debug code: skip to advanced shop for testing
+        if (startInput.toLowerCase() === 'testboss') {
+            this.character = new Character("Hero");
+            // Set up a character ready for advanced shop / final boss testing
+            this.character.level = 5;
+            this.character.baseMaxHp = 55;
+            this.character.maxHp = 55;
+            this.character.hp = 55;
+            this.character.attack = 12;
+            this.character.defense = 6;
+            this.character.gold = 204;
+            this.character.weapon = "Fine Bow";
+            this.character.shield = "Knight's Shield";
+            this.character.potions = 3;
+            this.character.spells = ['Arcane Blast', 'Energy Surge', 'Astral Strike'];
+            this.terminal.print("\n[yellow]*** DEBUG MODE: Skipping to Grand Finale ***[/yellow]");
+            this.updateSidebar();
+            await this.terminal.delay(500);
+            return await this.grandFinale();
+        }
+
         this.character = new Character("Hero");
         this.updateSidebar();
         return await this.thiefsCrossroads();
