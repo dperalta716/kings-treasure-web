@@ -2,6 +2,7 @@
  * Save System - localStorage-based game persistence
  */
 import { Character } from './character.js';
+import { CHARACTER_CLASSES } from './constants.js';
 
 const SAVE_PREFIX = 'kings_treasure_';
 const SAVE_VERSION = '1.0';
@@ -64,6 +65,7 @@ export function listSaves() {
                 slot,
                 timestamp: data.timestamp,
                 level: data.character.level,
+                characterClass: data.character.characterClass,
                 location: data.location,
                 gold: data.character.gold,
                 weapon: data.character.weapon
@@ -87,7 +89,13 @@ export function formatSaveInfo(save) {
     const dateStr = date.toLocaleString();
     const location = save.location.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 
-    return `Slot ${save.slot}: Level ${save.level} | ${location} | ${save.gold} gold | ${dateStr}`;
+    // Get class name if available
+    let className = '';
+    if (save.characterClass && CHARACTER_CLASSES[save.characterClass]) {
+        className = CHARACTER_CLASSES[save.characterClass].name + ' ';
+    }
+
+    return `Slot ${save.slot}: Lv${save.level} ${className}| ${location} | ${save.gold} gold | ${dateStr}`;
 }
 
 /**

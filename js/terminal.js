@@ -91,7 +91,9 @@ export class Terminal {
      * Handle keydown events on input
      */
     handleKeydown(e) {
-        if (e.key === 'Enter' && this.inputActive) {
+        if (!this.inputActive) return;
+
+        if (e.key === 'Enter') {
             const value = this.input.value.trim();
             this.print(`> ${value}`, 'user-input');
             this.input.value = '';
@@ -101,6 +103,15 @@ export class Terminal {
             if (this.inputResolve) {
                 this.inputResolve(value);
                 this.inputResolve = null;
+            }
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (this.inputResolve) {
+                const direction = e.key === 'ArrowUp' ? '__UP__' : '__DOWN__';
+                this.inputResolve(direction);
+                this.inputResolve = null;
+                // Re-activate input for next prompt
+                this.inputActive = false;
             }
         }
     }
@@ -186,10 +197,18 @@ export class Terminal {
      */
     showSprite(src, label = '') {
         if (src) {
-            // If sprite is already visible, fade out first
-            if (this.sprite.style.display === 'block' && this.sprite.src !== src) {
+            // Check if the current sprite ends with the same path (handles absolute vs relative)
+            const isSameSprite = this.sprite.src && this.sprite.src.endsWith(src);
+
+            // If sprite is already visible and different, fade transition
+            if (this.sprite.style.display === 'block' && !isSameSprite) {
+                // Cancel any pending sprite change
+                if (this.pendingSpriteTimeout) {
+                    clearTimeout(this.pendingSpriteTimeout);
+                }
+
                 this.sprite.classList.add('fading');
-                setTimeout(() => {
+                this.pendingSpriteTimeout = setTimeout(() => {
                     // Preload the new image before showing
                     const newImage = new Image();
                     newImage.onload = () => {
@@ -207,13 +226,14 @@ export class Terminal {
                     };
                     newImage.src = src;
                 }, 250); // Match CSS transition duration
-            } else {
+            } else if (!isSameSprite) {
                 // First time showing - just display it
                 this.sprite.src = src;
                 this.sprite.style.display = 'block';
                 this.sprite.alt = label;
                 this.spriteLabel.textContent = label;
             }
+            // If same sprite, do nothing (avoid flicker)
         } else {
             this.hideSprite();
         }

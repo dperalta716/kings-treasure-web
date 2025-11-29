@@ -70,7 +70,7 @@ export function calculateDamage(attacker, defender, isPlayer = true) {
     // Critical hit check (player only)
     let isCritical = false;
     if (isPlayer) {
-        let critChance = 0.2;  // 20% base
+        let critChance = attacker.getCritChance ? attacker.getCritChance() : 0.2;  // Uses class bonus (Rogue +10%)
         if (attacker.hasGhostweaveCloak) {
             critChance += 0.15;
         }
@@ -408,9 +408,17 @@ export class Battle {
         this.character.usedSpells.push(spellName);
 
         if (spell.type === 'attack') {
-            const damage = this.character.attack + spell.damageBonus;
+            let damage = this.character.attack + spell.damageBonus;
+            // Apply Mage spell damage bonus (+25%)
+            const spellBonus = this.character.getSpellDamageBonus ? this.character.getSpellDamageBonus() : 0;
+            if (spellBonus > 0) {
+                damage = Math.floor(damage * (1 + spellBonus));
+            }
             this.enemy.takeDamage(damage);
             this.terminal.print(`\nYou cast [magenta]${spellName}[/magenta]!`);
+            if (spellBonus > 0) {
+                this.terminal.print(`[cyan]Your arcane mastery amplifies the spell![/cyan]`);
+            }
             this.terminal.print(`Magical energy hits the [bold]${this.enemy.name}[/bold] for [red]${damage}[/red] damage!`);
             this.character.lastAction = 'spell';
             this.character.lastSpell = spellName;

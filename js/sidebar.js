@@ -1,7 +1,7 @@
 /**
  * Sidebar - Manages the stats sidebar UI
  */
-import { getXpForLevel } from './constants.js';
+import { getXpForLevel, CHARACTER_CLASSES } from './constants.js';
 
 export class Sidebar {
     constructor() {
@@ -15,6 +15,7 @@ export class Sidebar {
 
         // Hero elements
         this.heroLevel = document.getElementById('hero-level');
+        this.heroClass = document.getElementById('hero-class');
         this.heroGold = document.getElementById('hero-gold');
         this.heroHpBar = document.getElementById('hero-hp-bar');
         this.heroHpText = document.getElementById('hero-hp-text');
@@ -60,6 +61,15 @@ export class Sidebar {
         // Level and gold
         this.heroLevel.textContent = character.level;
         this.heroGold.textContent = `${character.gold} gold`;
+
+        // Class display
+        if (character.characterClass && CHARACTER_CLASSES[character.characterClass]) {
+            const classData = CHARACTER_CLASSES[character.characterClass];
+            this.heroClass.textContent = classData.name;
+            this.heroClass.className = `hero-class class-${character.characterClass}`;
+        } else {
+            this.heroClass.textContent = '';
+        }
 
         // HP bar
         this.updateHpBar(this.heroHpBar, this.heroHpText, character.hp, character.maxHp);

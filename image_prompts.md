@@ -1103,3 +1103,119 @@ sand suspended in air, swirling clock hands and gears floating,
 purple and gold temporal energy radiating outward, crystallized
 time fragments, clockwork citadel background
 ```
+
+### Mana Bolt
+**ID:** `mana_bolt`
+**Category:** spells
+
+```
+16-bit pixel art, dark fantasy RPG game effect sprite, detailed
+shading, vibrant colors, focused burst of blue arcane energy,
+swirling magical projectile with glowing core, trailing sparkles
+and magical particles, dark mystical background
+```
+
+---
+
+## Characters (7)
+
+### Gender Selection
+**ID:** `gender_selection`
+**Category:** characters
+
+```
+16-bit pixel art, dark fantasy RPG game sprite, detailed shading,
+vibrant colors, two humanoid silhouettes standing side by side
+taking up most of the frame, male figure on left slightly taller
+and broader, female figure on right with feminine proportions,
+both in mysterious shadowy form with soft ethereal glow outline,
+dark misty forest background with fog rolling between ancient
+trees, no text, no UI elements, no game interface
+```
+
+### Male Warrior
+**ID:** `male_warrior`
+**Category:** characters
+
+```
+16-bit dark fantasy RPG pixel art, detailed shading, realistic
+proportions, dramatic lighting, full body shot, male warrior in
+worn brown leather armor with iron studs and chainmail underneath,
+battle-scarred, long dark hair, gripping steel longsword and
+battered wooden shield, weathered face with determined expression,
+dynamic battle stance, dark misty forest background with fog
+rolling between ancient trees, moody atmosphere, no text, no UI
+elements
+```
+
+### Female Warrior
+**ID:** `female_warrior`
+**Category:** characters
+
+```
+16-bit dark fantasy RPG pixel art, detailed shading, realistic
+proportions, dramatic lighting, athletic female warrior in worn
+brown leather armor with iron studs and chainmail underneath,
+long braided dark hair, gripping steel longsword and battered
+wooden shield, fierce expression with battle scars, confident
+combat stance, dark misty forest background with fog rolling
+between ancient trees, moody atmosphere, no text, no UI elements
+```
+
+### Male Mage
+**ID:** `male_mage`
+**Category:** characters
+
+```
+16-bit dark fantasy RPG pixel art, detailed shading, realistic
+proportions, dramatic lighting, full body shot, young male sorcerer
+in flowing deep purple and midnight blue robes with silver arcane
+symbols, youthful handsome face with long dark hair, holding
+gnarled wooden staff with glowing crystal, mystical energy
+crackling around fingers, intense focused eyes, spell casting
+stance, dark misty forest background with fog rolling between
+ancient trees, moody atmosphere, no text, no UI elements
+```
+
+### Female Mage
+**ID:** `female_mage`
+**Category:** characters
+
+```
+16-bit dark fantasy RPG pixel art, detailed shading, realistic
+proportions, dramatic lighting, female sorceress in flowing deep
+purple and midnight blue robes with silver arcane symbols, long
+dark hair flowing with magical energy, holding elegant staff with
+glowing crystal, mystical power emanating from outstretched hand,
+intense focused eyes, dark misty forest background with fog
+rolling between ancient trees, moody atmosphere, no text, no UI
+elements
+```
+
+### Male Rogue
+**ID:** `male_rogue`
+**Category:** characters
+
+```
+16-bit dark fantasy RPG pixel art, detailed shading, realistic
+proportions, dramatic lighting, full body shot, male rogue assassin
+in hooded dark leather armor with forest green cloak, weathered
+rugged face like Aragorn, stubble, sharp calculating eyes, dual
+wielding wicked curved daggers, dynamic battle stance, dangerous
+and silent, dark misty forest background with fog rolling between
+ancient trees, moody atmosphere, no text, no UI elements
+```
+
+### Female Rogue
+**ID:** `female_rogue`
+**Category:** characters
+
+```
+16-bit dark fantasy RPG pixel art, detailed shading, realistic
+proportions, dramatic lighting, female rogue assassin in hooded
+dark leather armor with forest green cloak, sharp angular features,
+piercing eyes watching from shadow of hood, dual wielding wicked
+curved daggers, crouched predatory stance emerging from shadows,
+deadly and graceful, dark misty forest background with fog rolling
+between ancient trees, moody atmosphere, no text, no UI elements
+```

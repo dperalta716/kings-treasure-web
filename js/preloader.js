@@ -147,6 +147,15 @@ const SPRITES = [
     'assets/sprites/shields/gear_shield.webp',
     'assets/sprites/shields/gladiators_shield.webp',
 
+    // Characters (gender/class selection)
+    'assets/sprites/characters/gender_selection.webp',
+    'assets/sprites/characters/male_warrior.webp',
+    'assets/sprites/characters/female_warrior.webp',
+    'assets/sprites/characters/male_mage.webp',
+    'assets/sprites/characters/female_mage.webp',
+    'assets/sprites/characters/male_rogue.webp',
+    'assets/sprites/characters/female_rogue.webp',
+
     // Items
     'assets/sprites/items/health_potion.webp',
     'assets/sprites/items/strength_elixir.webp',
@@ -154,6 +163,7 @@ const SPRITES = [
     'assets/sprites/items/superior_health_potion.webp',
     'assets/sprites/items/masters_strength_elixir.webp',
     'assets/sprites/items/ultimate_defense_potion.webp',
+    'assets/sprites/items/mana_bolt.webp',
     'assets/sprites/items/arcane_blast.webp',
     'assets/sprites/items/energy_surge.webp',
     'assets/sprites/items/astral_strike.webp',
