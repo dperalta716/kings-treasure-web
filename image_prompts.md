@@ -1126,11 +1126,12 @@ and magical particles, dark mystical background
 ```
 16-bit pixel art, dark fantasy RPG character selection screen,
 detailed shading, vibrant colors, two humanoid silhouettes
-standing side by side labeled "1" and "2", male figure on left
-slightly taller and broader, female figure on right with
-feminine proportions, both in mysterious shadowy form with
-soft glow outline, ornate stone archway background with
-magical runes
+standing side by side, male figure on left slightly taller
+and broader, female figure on right with feminine proportions,
+both in mysterious shadowy form with ethereal golden glow outline,
+grand throne room background with towering stone pillars draped
+in royal banners, warm torchlight casting dramatic shadows,
+ancient tapestries depicting legendary heroes on the walls
 ```
 
 ### Male Warrior
@@ -1142,7 +1143,9 @@ magical runes
 shading, vibrant colors, strong muscular male warrior in brown
 leather armor with metal studs, short dark hair, holding steel
 sword and round wooden shield with metal rim, confident battle
-stance, castle training grounds background with weapon racks
+stance, sunlit castle courtyard background with weathered stone
+walls covered in ivy, crossed swords mounted above an arched
+gateway, distant mountains visible through battlements
 ```
 
 ### Female Warrior
@@ -1154,7 +1157,9 @@ stance, castle training grounds background with weapon racks
 shading, vibrant colors, athletic female warrior in brown leather
 armor with metal studs, long braided hair, holding steel sword
 and round wooden shield with metal rim, confident battle stance,
-castle training grounds background with weapon racks
+sunlit castle courtyard background with weathered stone walls
+covered in ivy, crossed swords mounted above an arched gateway,
+distant mountains visible through battlements
 ```
 
 ### Male Mage
@@ -1165,8 +1170,10 @@ castle training grounds background with weapon racks
 16-bit pixel art, dark fantasy RPG game character sprite, detailed
 shading, vibrant colors, male mage in flowing purple and blue robes,
 short beard, holding ornate mystic wand with glowing crystal tip,
-arcane energy swirling around hands, magical library background
-with floating books and glowing runes
+arcane energy swirling around hands, ancient wizard tower interior
+with towering bookshelves reaching into darkness, floating candles
+and glowing orbs, arcane circles etched into the stone floor,
+starlight streaming through a stained glass window
 ```
 
 ### Female Mage
@@ -1177,8 +1184,10 @@ with floating books and glowing runes
 16-bit pixel art, dark fantasy RPG game character sprite, detailed
 shading, vibrant colors, female mage in flowing purple and blue robes,
 long flowing hair, holding ornate mystic wand with glowing crystal tip,
-arcane energy swirling around hands, magical library background
-with floating books and glowing runes
+arcane energy swirling around hands, ancient wizard tower interior
+with towering bookshelves reaching into darkness, floating candles
+and glowing orbs, arcane circles etched into the stone floor,
+starlight streaming through a stained glass window
 ```
 
 ### Male Rogue
@@ -1189,8 +1198,10 @@ with floating books and glowing runes
 16-bit pixel art, dark fantasy RPG game character sprite, detailed
 shading, vibrant colors, male ranger in hooded dark green and brown
 cloth cloak, leather bracers and boots, rugged features like Aragorn,
-dual wielding curved daggers, stealthy crouched pose, shadowy forest
-path background with misty moonlight filtering through trees
+dual wielding curved daggers, stealthy crouched pose, midnight forest
+clearing with ancient twisted oak trees, silver moonlight piercing
+through dense canopy, wisps of fog curling around gnarled roots,
+distant campfire glow between the trees
 ```
 
 ### Female Rogue
@@ -1201,6 +1212,8 @@ path background with misty moonlight filtering through trees
 16-bit pixel art, dark fantasy RPG game character sprite, detailed
 shading, vibrant colors, female ranger in hooded dark green and brown
 cloth cloak, leather bracers and boots, sharp features, dual wielding
-curved daggers, stealthy crouched pose, shadowy forest path background
-with misty moonlight filtering through trees
+curved daggers, stealthy crouched pose, midnight forest clearing with
+ancient twisted oak trees, silver moonlight piercing through dense
+canopy, wisps of fog curling around gnarled roots, distant campfire
+glow between the trees
 ```

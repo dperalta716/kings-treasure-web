@@ -186,10 +186,18 @@ export class Terminal {
      */
     showSprite(src, label = '') {
         if (src) {
-            // If sprite is already visible, fade out first
-            if (this.sprite.style.display === 'block' && this.sprite.src !== src) {
+            // Check if the current sprite ends with the same path (handles absolute vs relative)
+            const isSameSprite = this.sprite.src && this.sprite.src.endsWith(src);
+
+            // If sprite is already visible and different, fade transition
+            if (this.sprite.style.display === 'block' && !isSameSprite) {
+                // Cancel any pending sprite change
+                if (this.pendingSpriteTimeout) {
+                    clearTimeout(this.pendingSpriteTimeout);
+                }
+
                 this.sprite.classList.add('fading');
-                setTimeout(() => {
+                this.pendingSpriteTimeout = setTimeout(() => {
                     // Preload the new image before showing
                     const newImage = new Image();
                     newImage.onload = () => {
@@ -207,13 +215,14 @@ export class Terminal {
                     };
                     newImage.src = src;
                 }, 250); // Match CSS transition duration
-            } else {
+            } else if (!isSameSprite) {
                 // First time showing - just display it
                 this.sprite.src = src;
                 this.sprite.style.display = 'block';
                 this.sprite.alt = label;
                 this.spriteLabel.textContent = label;
             }
+            // If same sprite, do nothing (avoid flicker)
         } else {
             this.hideSprite();
         }
