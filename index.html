@@ -19,13 +19,21 @@
     </div>
 
     <div id="game-container">
-        <div id="top-section">
+        <div id="main-column">
             <div id="sprite-panel">
                 <img id="current-sprite" src="" alt="" style="display: none;">
                 <div id="sprite-grid"></div>
                 <div id="sprite-label"></div>
             </div>
-            <div id="stats-sidebar">
+            <div id="terminal">
+                <div id="output"></div>
+                <div id="input-line">
+                    <span>&gt; </span>
+                    <input type="text" id="command-input" autofocus autocomplete="off">
+                </div>
+            </div>
+        </div>
+        <div id="stats-sidebar">
                 <!-- Enemy Section (combat only) -->
                 <div id="enemy-stats" class="stats-section hidden">
                     <div class="section-title">ENEMY</div>
@@ -133,13 +141,6 @@
                     <div class="section-title">ACTIVE BUFFS</div>
                     <div id="buffs-list"></div>
                 </div>
-            </div>
-        </div>
-        <div id="terminal">
-            <div id="output"></div>
-            <div id="input-line">
-                <span>&gt; </span>
-                <input type="text" id="command-input" autofocus autocomplete="off">
             </div>
         </div>
     </div>
